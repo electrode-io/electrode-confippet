@@ -2,14 +2,13 @@
   "name": "@walmart/electrode-confippet",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/confippet.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "Joel Chen <xchen@walmartlabs.com>",
+  "main": "lib/index.js",
   "scripts": {
     "test": "builder run test",
     "coverage": "builder run check"
   },
+  "keywords": [],
+  "author": "Joel Chen <xchen@walmartlabs.com>",
   "repository": {
     "type": "git",
     "url": "https://gecgithub01.walmart.com/xchen11/electrode-confippet.git"
@@ -19,10 +18,13 @@
   },
   "license": "ISC",
   "dependencies": {
+    "hoek": "^3.0.4",
+    "js-yaml": "^3.5.3",
     "lodash": "^3.10.1"
   },
   "devDependencies": {
     "@walmart/electrode-archetype-hapi-plugin-dev": "^2.0.3",
-    "builder": "^2.5.0"
+    "builder": "^2.5.0",
+    "intercept-stdout": "^0.1.2"
   }
 }

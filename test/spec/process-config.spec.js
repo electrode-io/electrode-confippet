@@ -4,7 +4,7 @@ const _ = require("lodash");
 const Confippet = require("../..");
 const fs = require("fs");
 
-describe("confippet", function () {
+describe("processConfig", function () {
   it("should do nothing for empty config", () => {
     expect(Confippet.processConfig().length).to.equal(0);
     expect(Confippet.processConfig(false).length).to.equal(0);
@@ -51,6 +51,32 @@ describe("confippet", function () {
           badN3: "{{config.badx.bady}}"
         }
       },
+      mm: {
+        nn: {
+          aa: [
+            {
+              m: {
+                n: {
+                  mx: "{{config.m.n.x}}"
+                }
+              }
+            },
+            {
+              m: {
+                n: {
+                  my: "{{config.m.n.y}}"
+                }
+              }
+            }
+          ]
+        }
+      },
+      m: {
+        n: {
+          x: "50",
+          y: "60"
+        }
+      },
       key: "{{readFile: test/data/foo.txt : ascii}}",
       key2: "{{readFile:test/data/foo.txt}}",
       crazy: "{{cwd:- now :process.cwd}}",
@@ -60,9 +86,12 @@ describe("confippet", function () {
       }
     };
 
+
     process.env.NODE_APP_INSTANCE = 5;
     process.env.NODE_ENV = "development";
     const missing = Confippet.processConfig(config);
+    expect(config.mm.nn.aa[0].m.n.mx).to.equal("50");
+    expect(config.mm.nn.aa[1].m.n.my).to.equal("60");
     expect(config.x).to.equal(`${process.cwd()}/test/data-5.txt`);
     expect(config.n0).to.equal(process.argv[0]);
     expect(config.n1).to.equal(process.argv[1]);
