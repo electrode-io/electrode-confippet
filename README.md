@@ -4,8 +4,6 @@ App Config processor to allow you to use templates in your config values.
 
 Electrode Application is configuration based.  To give you some flexibility in your configs, this module enable you to use templates in your config string values.
 
-It will also set `config.env` to `process.env` and `config.argv` to `process.argv`.
-
 ## Install
 
 ```

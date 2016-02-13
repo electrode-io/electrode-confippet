@@ -18,13 +18,6 @@ describe("confippet", function () {
   it("should not process config w/o templates", () => {
     const config = {
       a: "a",
-      has: "has",
-      get: {
-        b: "b"
-      },
-      util: {
-        c: "c"
-      },
       d1234: true,
       etewe: 50,
       "f-qeoir": {
@@ -50,11 +43,6 @@ describe("confippet", function () {
       p: "{{process.cwd}}",
       testFile: "{{process.cwd}}/test/data-{{env.NODE_APP_INSTANCE}}.txt",
       acwd: "{{cwd}}",
-      has: () => false,
-      get: () => null,
-      util: {
-        h: "{{config.x}}"
-      },
       now: "{{now}}",
       bad: "{{bad}}",
       badConf: "{{config.bad1.bad2}}",
@@ -80,7 +68,6 @@ describe("confippet", function () {
     expect(config.n1).to.equal(process.argv[1]);
     expect(config.y).to.equal(config.x);
     expect(config.p).to.equal(process.cwd());
-    expect(config.util.h).to.equal("{{config.x}}");
     expect(parseInt(config.now, 10)).to.be.above(0);
     expect(config.bad).to.equal("");
     expect(config.badConf).to.equal("");
