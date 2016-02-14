@@ -1,15 +1,12 @@
 "use strict";
 
-process.env.NODE_CONFIG_DIR = "test/config";
-process.env.NODE_APP_INSTANCE = "0";
-delete process.env.AUTO_LOAD_CONFIG_OFF;
-
 const autoLoadConfig = require("../../lib/auto-load-config");
-const config = require("../../config");
 const composedResult = require("../composed-result");
+const Hoek = require("hoek");
 
 describe("auto-load-config", function () {
   const result = composedResult();
+  let config;
 
   const resetEnv = () => {
     delete process.env.AUTO_LOAD_CONFIG_OFF;
@@ -20,23 +17,27 @@ describe("auto-load-config", function () {
     delete process.env.NODE_CONFIG;
   };
 
-  beforeEach(resetEnv);
-
-  it("should load config", () => {
+  before(() => {
+    resetEnv();
+    process.env.NODE_CONFIG_DIR = "test/config";
+    process.env.NODE_APP_INSTANCE = "0";
+    config = require("../../config"); // eslint-disable-line
     expect(config).to.deep.equal(result);
+  });
+
+  beforeEach(() => {
+    resetEnv();
+    config._$.reset();
+    expect(config).to.deep.equal({});
   });
 
   it("should skip instance file if it's not defined", () => {
     process.env.NODE_CONFIG_DIR = "test/config";
-    config._$.reset();
     autoLoadConfig(config);
     expect(config.instance0).to.equal(undefined);
   });
 
   it("should use default location if NODE_CONFIG_DIR is not defined", () => {
-    config._$.reset();
-    expect(config).to.deep.equal({});
-    delete process.env.NODE_CONFIG_DIR;
     process.env.NODE_APP_INSTANCE = "0";
     process.env.NODE_CONFIG = JSON.stringify({
       tx: "{{config.json}}"
@@ -48,7 +49,6 @@ describe("auto-load-config", function () {
   });
 
   it("should not auto load if AUTO_LOAD_CONFIG_OFF is set", () => {
-    config._$.reset();
     expect(config).to.deep.equal({});
     process.env.AUTO_LOAD_CONFIG_OFF = "true";
     autoLoadConfig(config, {dir: "test/config"});
@@ -56,7 +56,6 @@ describe("auto-load-config", function () {
   });
 
   it("should not process if AUTO_LOAD_CONFIG_PROCESS_OFF is set", () => {
-    config._$.reset();
     expect(config).to.deep.equal({});
     process.env.AUTO_LOAD_CONFIG_PROCESS_OFF = "true";
     process.env.NODE_APP_INSTANCE = "0";
@@ -67,5 +66,15 @@ describe("auto-load-config", function () {
     expect(config.$("tx")).to.equal("{{config.json}}");
     delete config.tx;
     expect(config).to.deep.equal(result);
+  });
+
+  it("should load production if set", () => {
+    process.env.NODE_CONFIG_DIR = "test/config";
+    process.env.NODE_APP_INSTANCE = "0";
+    process.env.NODE_ENV = "production";
+    autoLoadConfig(config);
+    const prodResult = Hoek.clone(result);
+    prodResult.deployment = "prod";
+    expect(config).to.deep.equal(prodResult);
   });
 });
