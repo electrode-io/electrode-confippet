@@ -4,6 +4,8 @@ const Path = require("path");
 const providerTypes = require("../../lib/provider-types");
 const intercept = require("intercept-stdout");
 const Confippet = require("../..");
+const composedResult = require("../composed-result");
+const Hoek = require("hoek");
 
 describe("confippet composeConfig", function () {
   it("should compose config from directory", function () {
@@ -14,17 +16,20 @@ describe("confippet composeConfig", function () {
       }
     });
 
-    const result = {
-      "json": "json",
-      "yaml": "yaml",
-      "js": "js",
-      "deployment": "dev",
+    const result = Hoek.merge({
       "foo": {
         "bar": "env"
+      },
+      "node": {
+        "config": "xyz"
       }
-    };
+    }, composedResult());
+
     process.env.CONFIPPET_0 = JSON.stringify({
       foo: {bar: "env"}
+    });
+    process.env.NODE_CONFIG = JSON.stringify({
+      node: {config: "xyz"}
     });
     const data = Confippet.composeConfig({
       dir: Path.join(__dirname, "../config"),
@@ -41,6 +46,8 @@ describe("confippet composeConfig", function () {
     expect(data).to.deep.equal(result);
     expect(env).to.deep.equal(process.env);
     expect(logs).to.be.above(0);
+    delete process.env.CONFIPPET_0;
+    delete process.env.NODE_CONFIG;
   });
 
   it("should not fail required when requested not to", function () {
@@ -49,9 +56,10 @@ describe("confippet composeConfig", function () {
     });
     const data = Confippet.composeConfig({
       dir: Path.join(__dirname, "../data"),
-      failMissingRequired: false
+      failMissing: false
     });
     expect(data.foo.bar).to.equal("env");
+    delete process.env.CONFIPPET_0;
   });
 
   const testWarn = (warnMissing) => {
@@ -95,7 +103,7 @@ describe("confippet composeConfig", function () {
   it("should throw when provider type missing", function () {
     expect(() => {
       Confippet.composeConfig({
-        failMissingRequired: false,
+        failMissing: false,
         warnMissing: false,
         providers: {
           "a": {
@@ -110,9 +118,9 @@ describe("confippet composeConfig", function () {
   it("should throw when providers resolve to empty", function () {
     expect(() => {
       Confippet.composeConfig({
-        failMissingRequired: false,
+        failMissing: false,
         warnMissing: false,
-        pickProviders: []
+        providerList: []
       });
     }).to.throw(Error);
   });
@@ -120,7 +128,7 @@ describe("confippet composeConfig", function () {
   it("should turn off all default providers by flag", function () {
     expect(() => {
       Confippet.composeConfig({
-        failMissingRequired: false,
+        failMissing: false,
         warnMissing: false,
         context: {
           defaultFilter: undefined
@@ -142,9 +150,9 @@ describe("confippet composeConfig", function () {
     let bCalled = false;
     let cCalled = false;
     Confippet.composeConfig({
-      failMissingRequired: false,
+      failMissing: false,
       warnMissing: false,
-      pickProviders: ["a", "b", "c", "e"],
+      providerList: ["a", "b", "c", "e"],
       providers: {
         "c": {
           type: providerTypes.required,
@@ -179,7 +187,7 @@ describe("confippet composeConfig", function () {
           handler: () => {
             throw new Error("not expect provider e to be called");
           },
-          filter: true
+          filter: false
         }
       }
     });
