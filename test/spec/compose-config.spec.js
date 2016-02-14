@@ -38,6 +38,9 @@ describe("confippet composeConfig", function () {
         env: {
           type: providerTypes.required
         }
+      },
+      context: {
+        instance: "0"
       }
     });
     unhookIntercept();

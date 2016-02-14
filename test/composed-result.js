@@ -5,6 +5,7 @@ module.exports = () => {
     "json": "json",
     "yaml": "yaml",
     "js": "js",
+    "instance0": "yaml",
     "deployment": "dev"
   };
 };
