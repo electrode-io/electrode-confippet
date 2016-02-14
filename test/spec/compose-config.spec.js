@@ -53,6 +53,17 @@ describe("confippet composeConfig", function () {
     delete process.env.NODE_CONFIG;
   });
 
+  it("should compose extensions according to extSearch", function () {
+    const data = Confippet.composeConfig({
+      dir: Path.join(__dirname, "../config"),
+      extSearch: ["js", "json", "yaml"],
+      context: {
+        instance: "0"
+      }
+    });
+    expect(data.js).to.equal("yaml");
+  });
+
   it("should not fail required when requested not to", function () {
     process.env.CONFIPPET_0 = JSON.stringify({
       foo: {bar: "env"}
