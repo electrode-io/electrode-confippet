@@ -3,6 +3,7 @@
 const autoLoadConfig = require("../../lib/auto-load-config");
 const composedResult = require("../composed-result");
 const Hoek = require("hoek");
+const Confippet = require("../../");
 
 describe("auto-load-config", function () {
   const result = composedResult();
@@ -21,7 +22,7 @@ describe("auto-load-config", function () {
     resetEnv();
     process.env.NODE_CONFIG_DIR = "test/config";
     process.env.NODE_APP_INSTANCE = "0";
-    config = require("../../config"); // eslint-disable-line
+    config = Confippet.config;
     expect(config).to.deep.equal(result);
   });
 
