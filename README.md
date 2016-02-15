@@ -1,8 +1,17 @@
 # Electrode Confippet
 
-App Config processor to allow you to use templates in your config values.
+Confippet is a versatile utility for managing your NodeJS application configuration.  Its goal is customization and extensibility, but offers a preset config out of the box.  
 
-Electrode Application is configuration based.  To give you some flexibility in your configs, this module enable you to use templates in your config string values.
+If the preset config doesn't meet your needs, you can customize and extend it.
+ 
+If you don't want to use the preset config, you can use Confippet's features to create your own.
+
+These are the features available to you:
+
+  * [composeConfig] - Allows you to compose your configuration from multiple sources.
+  * [processConfig] - Allows you to use templates in your configuration.
+  * [store] - A simple convenient config store to help you access your config.
+  * `presetConfig` - Automatically load a preset config object with some default settings.
 
 ## Install
 
@@ -10,197 +19,118 @@ Electrode Application is configuration based.  To give you some flexibility in y
 npm install @walmart/electrode-confippet --save
 ```
 
-## Usage
+## Using the Auto Loaded Preset Config
+
+Confippet uses `presetConfig` to automatically compose a preset config with some default settings similar to that of the [node-config module].
+
+If you are not interested in customizing it, then you can just use the preset config without much work.
 
 ```js
-const Confippet = require("@walmart/electrode-confippet");
-const config = require("config");
-require("@walmart/electrode-server")(Confippet.processConfig(config));
+const config = require("@walmart/electrode-confippet").config;
+const url = config.$("settings.url");
 ```
 
-## Example Config
+> The auto load only occur when you access `Confippet.config` the first time.
 
-```js
-{
-  x: "{{config.y}}",
-  n0: "{{argv.0}}",
-  n1: "{{argv.1}}",
-  y: "{{config.testFile}}",
-  p: "{{process.cwd}}",
-  testFile: "{{process.cwd}}/test/data-{{env.NODE_APP_INSTANCE}}.txt",
-  acwd: "{{cwd}}",
-  now: "{{now}}",
-  bad: "{{bad}}",
-  badConf: "{{config.bad1.bad2}}",
-  badN1: {
-    badN2: {
-      badN3: "{{config.badx.bady}}"
-    }
-  },
-  ui: {
-    env: "{{env.NODE_ENV}}"
-  }
-}
-```
+## Default Config Files Settings
 
-After confippet processing, this could become something similar to the following one:
+By default, `Confippet.config` will be composed by automatically searching and loading these files under the `config` directory in the order specified:
 
-```js
-{
-  "x": "/Users/xchen11/dev/electrode-confippet/test/data-5.txt",
-  "n0": "/usr/local/nvm/versions/node/v4.2.4/bin/node",
-  "n1": "/Users/xchen11/dev/electrode-confippet/node_modules/mocha/bin/_mocha",
-  "y": "/Users/xchen11/dev/electrode-confippet/test/data-5.txt",
-  "p": "/Users/xchen11/dev/electrode-confippet",
-  "testFile": "/Users/xchen11/dev/electrode-confippet/test/data-5.txt",
-  "acwd": "/Users/xchen11/dev/electrode-confippet",
-  "now": "1454105798037",
-  "bad": "",
-  "badConf": "",
-  "badN1": {
-    "badN2": {
-      "badN3": ""
-    }
-  },
-  "ui": {
-    "env": "development"
-  }
-}
-```
+> This is the same as [node-config files].
 
-And you get back an array of missing values from confippet:
+   1. `default.EXT`
+   1. `default-{instance}.EXT`
+   1. `{deployment}.EXT`
+   1. `{deployment}-{instance}.EXT`
+   1. `{short_hostname}.EXT`
+   1. `{short_hostname}-{instance}.EXT`
+   1. `{short_hostname}-{deployment}.EXT`
+   1. `{short_hostname}-{deployment}-{instance}.EXT`
+   1. `{full_hostname}.EXT`
+   1. `{full_hostname}-{instance}.EXT`
+   1. `{full_hostname}-{deployment}.EXT`
+   1. `{full_hostname}-{deployment}-{instance}.EXT`
+   1. `local.EXT`
+   1. `local-{instance}.EXT`
+   1. `local-{deployment}.EXT`
+   1. `local-{deployment}-{instance}.EXT`
 
-```js
-[
-  {
-    "path": "config.bad",
-    "value": "{{bad}}",
-    "tmpl": "bad"
-  },
-  {
-    "path": "config.badConf",
-    "value": "{{config.bad1.bad2}}",
-    "tmpl": "config.bad1.bad2"
-  },
-  {
-    "path": "config.badN1.badN2.badN3",
-    "value": "{{config.badx.bady}}",
-    "tmpl": "config.badx.bady"
-  }
-]
-```
+**Where**
 
-## The Template
+  * `EXT` can be any of `["json", "yaml", "js"]`.  Confippet will load all of them in that order.
+  * `{instance}` is your app's instance string in multi-instance deployments.  Specified by `NODE_APP_INSTANCE`. 
+  * `{short_hostname}` is your server name up to the first dot.
+  * `{full_hostname}` is your whole server name.
+  * `{deployment}` is your deployment environment.  Specified by `NODE_ENV`.
 
-The template is in the form of `{{ref1:-some text:ref2:refN}}`.
+> After it search and load all the files, it will look for override JSON strings from environment variables.
 
-  * Each `ref` is used as a path to retrieve a value from the context.
+## Environment Variables
 
-  * If `ref` starts with `-` then it's used as a literal string.
+The preset config is composed with settings from the following environment variables.
+
+  * `AUTO_LOAD_CONFIG_OFF` - If this is set, then Confippet will **not** automatically load any configuration into the preset `config` store.  So `Confippet.config` is just an empty store.  You can set this and customize the config structure before loading.
+
+  * `NODE_CONFIG_DIR` - Set the directory to search for config files.  By default, Confippet looks in the `config` directory for config files.
   
-  * If the first `ref` (`ref1`) resolves to a function, then the remaining `ref`s are treated as literal strings and passed as params in an array to the function.  See [Function Ref](#function-ref).
+  * `NODE_ENV` - By default, Confippet load `development` config files after loading `default`.  You can set this to change to a different deployment such as `production`.
+  
+  * `NODE_APP_INSTANCE` - If you have a multi-instances deployment app, you can set this to load instance specific configurations.
+  
+  * `AUTO_LOAD_CONFIG_PROCESS_OFF` - By default, after composing the config from all sources, Confippet will use [processConfig] to process the templates.  You can set this to some value to turn it off.
+  
+  * `NODE_CONFIG` - You can set this to a valid JSON string and Confippet will parse it to override the configuration.
+  
+  * `CONFIPPET*` - You can set any environment variable that starts with `CONFIPPET` and Confippet will parse them as JSON strings to override the configuration.
 
-> While you can have multiple `ref`s in a single `{{}}`, the recommended form for multiple `ref`s however is `{{ref1}}some text{{ref2}}{{refN}}`
+## Config Composition
 
-&nbsp;
-> Please note that the template processing is just using the straight string replace.  It's very simple and dumb.  It will run multiple passes to do the replacement, but nothing fancy.
+Any config source loaded will be merged into the config store.  So anything that's loaded first can be override by something that's loaded later.
 
-## Context
+Objects `{}` are merged together.
 
-The context contains these object you can use:
+Primitive values (string, boolean, number) are replaced.
 
-  - `config` - refer back to your own config.  ie: `{{config.someConfig.config1}}`
-  - `process` - refer to Node global `process`
-  - `argv` - refer to Node `process.argv`.  ie: `{{argv.0}}`
-  - `cwd` - refer to Node `process.cwd`. ie: `{{cwd}}`
-  - `env` - refer to Node `process.env`. ie: `{{env.NODE_ENV}}`
-  - `now` - refer to `Date.now`. ie: `{{now}}`
-  - `readFile` - function to read a file.  Usage is `{{readFile:filename:encoding}}`.  ie: `{{readFile:data/foo.txt:utf8}}`
+***Arrays are replaced.***
 
-## Function Ref
+## File Types
 
-If the first `ref` in a template resolves to a function, then it will be called with an object containing the following parameters, with the remaining `ref`s stored in `params`.
+Confippet supports `json`, `yaml`, and `js` files.  It will search in that order.  Each one found will be loaded and merged into the config store.  So `js` overrides `yaml` overrides `json`.
 
-`{ context, config, obj, key, value, tmpl, params, depthPath }`
+You can add handlers for different file types and change their loading order.  See [composeConfig] for further details.
 
-Where:
+## Quick Intro to Customizing
 
-  - `context` - the context
-  - `config` - the config
-  - `obj` - current sub object in config being processed, could be `config` itself
-  - `key` - current key in `obj` being processed
-  - `value` - value for `key`
-  - `tmpl` - template extracted from the config value
-  - `params` - the remaining `:` separated `ref`s as an array.
-  - `depthPath` - current depth path in config.  ie: `config.sub1.sub2`
+The [composeConfig] feature supports a fully customizable and extendable config structure.  Even the preset config structure can be extended since it's composed using the same feature.
+
+If you want to use the preset config, but add an extension handler or insert a source, you can turn off auto loading, and load it yourself with your own options.
+
+> NOTE this has to happen before any other file tries to access `Confippet.config`.  You should do this in your startup `index.js` file.
 
 For example:
 
-This template:
-
-```
-{{readFile:data/foo.txt:utf8}}
-```
-
-Will trigger this function call:
-
 ```js
-context.readFile({ 
-  context, config, obj, key, value, tmpl,
-  params: [ "data/foo.txt", "utf8" ], depthPath 
+process.env.AUTO_LOAD_CONFIG_OFF = true;
+
+const Confippet = require("@walmart/electrode-confippet");
+const config = Confippet.config;
+Confippet.presetConfig.load(config, {
+  providers: {
+    customConfig: {
+      name: "{{env.CUSTOM_CONFIG_SOURCE}}",
+      order: 300,
+      type: Confippet.providerTypes.required
+    }
+  }
 });
 ```
 
-## APIs
+The above compose option adds a new provider that looks for a file named by the env var `CUSTOM_CONFIG_SOURCE` and will be loaded after all default sources are loaded (controlled by the order).
 
-### [processConfig](#processconfig)
+To further understand the `_$` and the `compose` options.  Please see [store], [composeConfig], and [processConfig] features for details.
 
-`processConfig(config, options)`
-
-Process your config.
-
-#### Parameters
-
-  - `config` - your config to be processed
-  - `options` - options
-    - `options.context` - additional context you want to add.
-
-For example, you can pass in the following options.
-
-```js
-{
-  context: {
-    test: (data) => "test",
-    custom: {
-      url: "http://test"
-    }
-  }
-}
-```
-
-With that, you can refer to them in your config like this:
-
-```js
-{
-  test: "{{test}}",
-  url: "{{custom.url}}"
-}
-```
-
-#### Returns 
-
-An array of config items for which its template resolved to `undefined`.  An empty array `[]` is returned if everything resolved.
-
-ie: 
-
-```js
-[ 
-  { 
-    path: "config.badConf.badKey", 
-    value: "{{config.nonExistingConfig}}",
-    tmpl: "config.nonExistingConfig" 
-  } 
-]
-```
-
-
+[node-config module]: https://github.com/lorenwest/node-config
+[node-config files]: https://github.com/lorenwest/node-config/wiki/Configuration-Files
+[store]: ./store.md
+[composeConfig]: ./compose.md
+[processConfig]: ./templates.md
