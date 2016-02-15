@@ -1,8 +1,8 @@
 "use strict";
 
 const config = require("./lib/store")();
-const autoLoadConfig = require("./lib/auto-load-config");
+const presetConfig = require("./lib/preset-config");
 
-autoLoadConfig(config);
+presetConfig.load(config);
 
 module.exports = config;
