@@ -112,9 +112,17 @@ For example:
 ```js
 process.env.AUTO_LOAD_CONFIG_OFF = true;
 
+const JSON5 = require("json5");
+const fs = require("fs");
 const Confippet = require("@walmart/electrode-confippet");
 const config = Confippet.config;
+
+const extHandlers = Confippet.extHandlers;
+extHandlers.json5 = (fullF) => JSON5.parse(fs.readFileSync(fullF, "utf8"));
+
 Confippet.presetConfig.load(config, {
+  extSearch: ["json", "json5", "yaml", "js"],
+  extHandlers,
   providers: {
     customConfig: {
       name: "{{env.CUSTOM_CONFIG_SOURCE}}",
@@ -126,6 +134,8 @@ Confippet.presetConfig.load(config, {
 ```
 
 The above compose option adds a new provider that looks for a file named by the env var `CUSTOM_CONFIG_SOURCE` and will be loaded after all default sources are loaded (controlled by the order).
+
+It also adds a new extension handler for `json5`, and have it loaded after `json`.
 
 To further understand the `_$` and the `compose` options.  Please see [store], [composeConfig], and [processConfig] features for details.
 
