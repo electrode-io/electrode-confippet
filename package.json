@@ -11,7 +11,7 @@
   "author": "Joel Chen <xchen@walmartlabs.com>",
   "repository": {
     "type": "git",
-    "url": "https://gecgithub01.walmart.com/xchen11/electrode-confippet.git"
+    "url": "https://gecgithub01.walmart.com/electrode/electrode-confippet.git"
   },
   "engines": {
     "node": ">= 4.2.2"
