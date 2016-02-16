@@ -78,4 +78,17 @@ describe("preset-config", function () {
     prodResult.deployment = "prod";
     expect(config).to.deep.equal(prodResult);
   });
+
+  it("should load configs from multiple directories", () => {
+    process.env.NODE_CONFIG_DIR = "test/config";
+    process.env.NODE_CONFIG_DIR_0 = "test/config1";
+    process.env.NODE_APP_INSTANCE = "0";
+    process.env.NODE_ENV = "production";
+    presetConfig.autoLoad(config);
+    const prodResult = Hoek.clone(result);
+    prodResult.default1 = "json";
+    prodResult.deployment = "prod";
+    prodResult.deployment1 = "production";
+    expect(config).to.deep.equal(prodResult);
+  });
 });
