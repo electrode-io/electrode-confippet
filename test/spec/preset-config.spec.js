@@ -2,7 +2,7 @@
 
 const presetConfig = require("../../lib/preset-config");
 const composedResult = require("../composed-result");
-const Hoek = require("hoek");
+const _ = require("lodash");
 const Confippet = require("../../");
 
 describe("preset-config", function () {
@@ -74,8 +74,9 @@ describe("preset-config", function () {
     process.env.NODE_APP_INSTANCE = "0";
     process.env.NODE_ENV = "production";
     presetConfig.autoLoad(config);
-    const prodResult = Hoek.clone(result);
+    const prodResult = _.cloneDeep(result);
     prodResult.deployment = "prod";
+    prodResult.arr = ["prod", 1, "2"];
     expect(config).to.deep.equal(prodResult);
   });
 
@@ -85,10 +86,11 @@ describe("preset-config", function () {
     process.env.NODE_APP_INSTANCE = "0";
     process.env.NODE_ENV = "production";
     presetConfig.autoLoad(config);
-    const prodResult = Hoek.clone(result);
+    const prodResult = _.cloneDeep(result);
     prodResult.default1 = "json";
     prodResult.deployment = "prod";
     prodResult.deployment1 = "production";
+    prodResult.arr = ["prod", 1, "2"];
     expect(config).to.deep.equal(prodResult);
   });
 });

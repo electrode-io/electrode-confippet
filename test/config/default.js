@@ -1,5 +1,6 @@
 "use strict";
 
 module.exports = {
-  js: "js"
+  js: "js",
+  arr: [ "js", 1, { b: 50 } ]
 };

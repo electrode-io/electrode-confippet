@@ -39,7 +39,7 @@ describe("store", function () {
     expect(store.$("foo.x.val.0")).to.equal("bar");
     expect(store.$("foo.x.val.1")).to.equal("blah");
     expect(store.$("foo.x.val.2")).to.equal("hello");
-    expect(store.$([])).to.deep.equal(store);
+    expect(store.$([])).to.deep.equal(undefined);
     expect(store.$("")).to.equal(undefined);
     expect(store.$(true)).to.equal(undefined);
     expect(store.$(5)).to.equal(undefined);
@@ -82,14 +82,13 @@ describe("store", function () {
       dir: "test/config"
     });
 
-    const result = {
-      "json": "json",
-      "yaml": "yaml",
-      "js": "js",
-      "deployment": "dev"
-    };
+    const result = require("../composed-result")();
+    delete result.instance0;
 
     expect(store).to.deep.equal(result);
+    expect(store.$("arr[0]")).to.equal("js");
+    expect(store.$("arr[1]")).to.equal(1);
+    expect(store.$("arr[2].b")).to.equal(50);
   });
 });
 

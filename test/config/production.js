@@ -1,5 +1,6 @@
 "use strict";
 
 module.exports = {
-  "deployment": "prod"
+  "deployment": "prod",
+  "arr": ["prod", 1, "2"]
 };

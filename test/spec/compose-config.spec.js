@@ -5,7 +5,8 @@ const providerTypes = require("../../lib/provider-types");
 const intercept = require("intercept-stdout");
 const Confippet = require("../..");
 const composedResult = require("../composed-result");
-const Hoek = require("hoek");
+const util = require("../../lib/util");
+const _ = require("lodash");
 
 describe("confippet composeConfig", function () {
   it("should compose config from directory", function () {
@@ -16,14 +17,14 @@ describe("confippet composeConfig", function () {
       }
     });
 
-    const result = Hoek.merge({
+    const result = _.merge({
       "foo": {
         "bar": "env"
       },
       "node": {
         "config": "xyz"
       }
-    }, composedResult());
+    }, composedResult(), util.replaceArray);
 
     process.env.CONFIPPET_0 = JSON.stringify({
       foo: {bar: "env"}
@@ -145,7 +146,7 @@ describe("confippet composeConfig", function () {
         failMissing: false,
         warnMissing: false,
         context: {
-          defaultFilter: undefined
+          defaultFilter: ""
         }
       });
     }).to.throw(Error);

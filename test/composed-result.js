@@ -6,6 +6,7 @@ module.exports = () => {
     "yaml": "yaml",
     "js": "js",
     "instance0": "yaml",
-    "deployment": "dev"
+    "deployment": "dev",
+    "arr": ["js", 1, {b: 50}]
   };
 };
