@@ -1,7 +1,7 @@
 {
   "name": "@walmart/electrode-confippet",
   "version": "1.2.12",
-  "description": "",
+  "description": "Managing NodeJS application configuration",
   "main": "lib/index.js",
   "scripts": {
     "test": "builder run test",
