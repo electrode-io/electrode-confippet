@@ -1,5 +1,6 @@
 {
   "json": "json",
   "yaml": "json",
-  "js": "json"
+  "js": "json",
+  "+uArray": ["a", "b", "c"]
 }
