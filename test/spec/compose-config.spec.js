@@ -6,7 +6,6 @@ const intercept = require("intercept-stdout");
 const Confippet = require("../..");
 const composedResult = require("../composed-result");
 const util = require("../../lib/util");
-const _ = require("lodash");
 
 describe("confippet composeConfig", function () {
   it("should compose config from directory", function () {
@@ -17,14 +16,14 @@ describe("confippet composeConfig", function () {
       }
     });
 
-    const result = _.merge({
+    const result = util.merge({
       "foo": {
         "bar": "env"
       },
       "node": {
         "config": "xyz"
       }
-    }, composedResult(), util.replaceArray);
+    }, composedResult());
 
     process.env.CONFIPPET_0 = JSON.stringify({
       foo: {bar: "env"}

@@ -93,6 +93,8 @@ Primitive values (string, boolean, number) are replaced.
 
 ***Arrays are replaced.***
 
+***EXCEPT*** if the key starts with `+` and both source and target are arrays, then they are union together using lodash _.union.
+
 ## File Types
 
 Confippet supports `json`, `yaml`, and `js` files.  It will search in that order.  Each one found will be loaded and merged into the config store.  So `js` overrides `yaml` overrides `json`.
