@@ -4,6 +4,8 @@ const _ = require("lodash");
 const Confippet = require("../..");
 const fs = require("fs");
 
+const expect = require("chai").expect;
+
 describe("processConfig", function () {
   it("should do nothing for empty config", () => {
     expect(Confippet.processConfig().length).to.equal(0);
@@ -81,6 +83,14 @@ describe("processConfig", function () {
       key2: "{{readFile:test/data/foo.txt}}",
       crazy: "{{cwd:- now :process.cwd}}",
       pointless: "{{- pointless }}",
+      lowerEnv1: "{{getEnv:foo1:lowerCase}}",
+      lowerEnv2: "{{getEnv:foo1:LC}}",
+      upperEnv1: "{{getEnv:foo1:upperCase}}",
+      upperEnv2: "{{getEnv:foo1:UC}}",
+      unchangeEnv1: "{{getEnv:foo1}}",
+      unchangeEnv2: "{{getEnv:foo1:???}}",
+      badEnv: "{{getEnv:bad_env}}",
+      badEnv2: "{{getEnv}}",
       ui: {
         env: "{{env.NODE_ENV}}"
       }
@@ -89,6 +99,7 @@ describe("processConfig", function () {
 
     process.env.NODE_APP_INSTANCE = 5;
     process.env.NODE_ENV = "development";
+    process.env.foo1 = "FooBar";
     const missing = Confippet.processConfig(config);
     expect(config.mm.nn.aa[0].m.n.mx).to.equal("50");
     expect(config.mm.nn.aa[1].m.n.my).to.equal("60");
@@ -105,6 +116,14 @@ describe("processConfig", function () {
     expect(config.crazy).to.equal(`${process.cwd()} now ${process.cwd()}`);
     expect(config.pointless).to.equal(` pointless `);
     expect(config.ui.env).to.equal("development");
+    expect(config.badEnv).to.equal("undefined");
+    expect(config.badEnv2).to.equal("undefined");
+    expect(config.lowerEnv1).to.equal("foobar");
+    expect(config.lowerEnv2).to.equal("foobar");
+    expect(config.upperEnv1).to.equal("FOOBAR");
+    expect(config.upperEnv2).to.equal("FOOBAR");
+    expect(config.unchangeEnv1).to.equal("FooBar");
+    expect(config.unchangeEnv2).to.equal("FooBar");
     expect(missing.length).to.equal(3);
     expect(missing[0].path).to.equal("config.bad");
     expect(missing[0].value).to.equal("{{bad}}");
@@ -112,6 +131,7 @@ describe("processConfig", function () {
     expect(missing[1].value).to.equal("{{config.bad1.bad2}}");
     expect(missing[2].path).to.equal("config.badN1.badN2.badN3");
     expect(missing[2].value).to.equal("{{config.badx.bady}}");
+
   });
 
   it("should throw error if readFile missing filename", () => {
