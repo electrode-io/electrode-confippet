@@ -16,13 +16,13 @@
   "engines": {
     "node": ">= 4.2.2"
   },
-  "license": "ISC",
+  "license": "UNLICENSED",
   "dependencies": {
     "js-yaml": "^3.5.3",
-    "lodash": "^3.10.1"
+    "lodash": "^4.13.1"
   },
   "devDependencies": {
-    "@walmart/electrode-archetype-hapi-plugin-dev": "^2.0.3",
+    "@walmart/electrode-archetype-njs-module-dev": "^1.0.0",
     "builder": "^2.5.0",
     "intercept-stdout": "^0.1.2"
   }
