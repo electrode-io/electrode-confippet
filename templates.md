@@ -2,6 +2,8 @@
 
 Confippet has a simple processor to allow you to use templates in your config values.
 
+If you are using the preset config only, then it automatically does this.  You can see the [template context](#context) for what's available.
+
 ### Usage
 
 ```js
@@ -108,6 +110,8 @@ The context contains these object you can use:
   - `env` - refer to Node `process.env`. ie: `{{env.NODE_ENV}}`
   - `now` - refer to `Date.now`. ie: `{{now}}`
   - `readFile` - function to read a file.  Usage is `{{readFile:filename:encoding}}`.  ie: `{{readFile:data/foo.txt:utf8}}`
+  - `getEnv` - function to retrieve ENV variable, and allow you to convert the value to lowercase or uppercase.
+     - Usage is `{{getEnv:ENV_VAR_NAME}}` or `{{getEnv:ENV_VAR_NAME:lowerCase}}` or `{{getEnv:ENV_VAR_NAME:upperCase}}`
 
 ### Function Ref
 

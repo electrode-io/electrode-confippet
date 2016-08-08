@@ -8,10 +8,10 @@ If you don't want to use the preset config, you can use Confippet's features to 
 
 These are the features available to you:
 
+  * `presetConfig` - Automatically load a preset config object with some default settings.
   * [composeConfig] - Allows you to compose your configuration from multiple sources.
   * [processConfig] - Allows you to use templates in your configuration.
   * [store] - A simple convenient config store to help you access your config.
-  * `presetConfig` - Automatically load a preset config object with some default settings.
 
 ## Install
 
@@ -22,6 +22,8 @@ npm install @walmart/electrode-confippet --save
 ## Using the Auto Loaded Preset Config
 
 Confippet uses `presetConfig` to automatically compose a preset config with some default settings similar to that of the [node-config module].
+
+Typically the preset config is enough to handle an application's configuration management.
 
 If you are not interested in customizing it, then you can just use the preset config without much work.
 
@@ -83,6 +85,12 @@ The preset config is composed with settings from the following environment varia
   
   * `CONFIPPET*` - You can set any environment variable that starts with `CONFIPPET` and Confippet will parse them as JSON strings to override the configuration.
 
+## Using Templates
+
+In your config files, you can have templates in the config values.  The templates will be resolved with a preset context.
+
+See [processConfig] for more information on config value templates.
+
 ## Config Composition
 
 Any config source loaded will be merged into the config store.  So anything that's loaded first can be override by something that's loaded later.
@@ -100,6 +108,27 @@ Primitive values (string, boolean, number) are replaced.
 Confippet supports `json`, `yaml`, and `js` files.  It will search in that order.  Each one found will be loaded and merged into the config store.  So `js` overrides `yaml` overrides `json`.
 
 You can add handlers for different file types and change their loading order.  See [composeConfig] for further details.
+
+## Usage in Node Modules
+
+If you have a Node module that has its own configurations base on environment, like `NODE_ENV`, you can use Confippet to load config files for your module.
+
+The example below will use the [default compose options](./lib/default-compose-opts.js) to compose configurations from the directory `config` under the script's directory (`__dirname`).
+
+```js
+const Confippet = require("electrode-confippet");
+
+const options = {
+  dirs: [Path.join(__dirname, "config")],
+  warnMissing: false,
+  context: {
+    deployment: process.env.NODE_ENV
+  }
+};
+
+const defaults = Confippet.store();
+defaults._$.compose(configOptions);
+```
 
 ## Quick Intro to Customizing
 
