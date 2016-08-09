@@ -1,29 +1,29 @@
 {
-  "name": "@walmart/electrode-confippet",
-  "version": "1.5.0",
+  "name": "electrode-confippet",
+  "version": "1.0.0",
   "description": "Managing NodeJS application configuration",
   "main": "lib/index.js",
   "scripts": {
-    "test": "builder run test",
-    "coverage": "builder run check"
+    "test": "gulp test",
+    "coverage": "gulp check"
   },
   "keywords": [],
   "author": "Joel Chen <xchen@walmartlabs.com>",
   "repository": {
     "type": "git",
-    "url": "https://gecgithub01.walmart.com/electrode/electrode-confippet.git"
+    "url": "https://github.com/electrode-io/electrode-confippet.git"
   },
   "engines": {
     "node": ">= 4.2.2"
   },
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "dependencies": {
     "js-yaml": "^3.5.3",
     "lodash": "^4.13.1"
   },
   "devDependencies": {
-    "@walmart/electrode-archetype-njs-module-dev": "^1.0.0",
-    "builder": "^2.5.0",
+    "electrode-archetype-njs-module-dev": "^1.0.0",
+    "gulp": "^3.9.1",
     "intercept-stdout": "^0.1.2"
   }
 }

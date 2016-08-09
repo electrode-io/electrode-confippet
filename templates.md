@@ -7,9 +7,9 @@ If you are using the preset config only, then it automatically does this.  You c
 ### Usage
 
 ```js
-const Confippet = require("@walmart/electrode-confippet");
+const Confippet = require("electrode-confippet");
 const data = Confippet.compose({ dir: "config" });
-require("@walmart/electrode-server")(Confippet.processConfig(data));
+require("electrode-server")(Confippet.processConfig(data));
 ```
 
 ### Example Config

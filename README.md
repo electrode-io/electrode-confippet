@@ -16,7 +16,7 @@ These are the features available to you:
 ## Install
 
 ```
-npm install @walmart/electrode-confippet --save
+npm install electrode-confippet --save
 ```
 
 ## Using the Auto Loaded Preset Config
@@ -28,7 +28,7 @@ Typically the preset config is enough to handle an application's configuration m
 If you are not interested in customizing it, then you can just use the preset config without much work.
 
 ```js
-const config = require("@walmart/electrode-confippet").config;
+const config = require("electrode-confippet").config;
 const url = config.$("settings.url");
 ```
 
@@ -145,7 +145,7 @@ process.env.AUTO_LOAD_CONFIG_OFF = true;
 
 const JSON5 = require("json5");
 const fs = require("fs");
-const Confippet = require("@walmart/electrode-confippet");
+const Confippet = require("electrode-confippet");
 const config = Confippet.config;
 
 const extHandlers = Confippet.extHandlers;
