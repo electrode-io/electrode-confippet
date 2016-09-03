@@ -19,6 +19,62 @@ These are the features available to you:
 npm install electrode-confippet --save
 ```
 
+## Quickstart Guide
+
+### Electrode
+- Confippet is built-in to electrode. Scaffold an electrode app using the following commands: 
+```
+  npm install -g yo
+  npm install -g generator-electrode
+  yo electrode
+```
+- Once the scaffolding is complete, open the following config files: 
+```
+config
+|_ default.json
+|_ development.json
+|_ production.json
+```
+- Update and/or add your configuration settings 
+
+### Express
+- Scaffold an express app: 
+```
+> npm install express-generator -g
+> express myApp
+> cd myApp 
+> npm install 
+```
+- Add electrode-confippet: 
+```
+> npm install electrode-confippet --save
+```
+- Create the config folder: 
+```
+> mkdir config
+> cd config
+```
+- Add the following config files: 
+```
+config
+|_ default.json
+|_ development.json
+|_ staging.json
+|_ production.json
+```
+- Example development.json: 
+```
+{
+  "settings: {
+    url: "http://dev.mysite.com"
+  }
+}
+```
+- Add the following to app.js: 
+```
+const config = require("electrode-confippet").config;
+```
+
 ## Using the Auto Loaded Preset Config
 
 Confippet uses `presetConfig` to automatically compose a preset config with some default settings similar to that of the [node-config module].
