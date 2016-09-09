@@ -227,13 +227,13 @@ Confippet.presetConfig.load(config, {
 ```
 
 The above compose option adds a new provider that looks for a file named by the
-env var `CUSTOM_CONFIG_SOURCE` and will be loaded after all default sources are
-loaded (controlled by `order`).
+environment variable `CUSTOM_CONFIG_SOURCE` and will be loaded after all default
+sources are loaded (controlled by `order`).
 
 It also adds a new extension handler, `json5`, to be loaded after `json`.
 
-To further understand the `_$` and the `compose` options. Please see [store],
-[composeConfig], and [processConfig] features for details.
+To further understand the `_$` and the `compose` options, please see the
+documentation for [store], [composeConfig], and [processConfig] features.
 
 [node-config npm module]: https://github.com/lorenwest/node-config
 [node-config files]: https://github.com/lorenwest/node-config/wiki/Configuration-Files
