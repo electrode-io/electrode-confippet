@@ -233,7 +233,7 @@ sources are loaded (controlled by `order`).
 It also adds a new extension handler, `json5`, to be loaded after `json`.
 
 To further understand the `_$` and the `compose` options, please see the
-documentation for [store], [composeConfig], and [processConfig] features.
+documentation for [store], [composeConfig], and [processConfig].
 
 [node-config npm module]: https://github.com/lorenwest/node-config
 [node-config files]: https://github.com/lorenwest/node-config/wiki/Configuration-Files
