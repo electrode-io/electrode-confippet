@@ -47,11 +47,13 @@ Make a `config/` directory inside the main app directory, and put the following
 into a file named `default.json` in that directory:
 
 ```json
-"settings": {
-  "db": {
-    "host": "localhost",
-    "port": 5432,
-    "database": "clients"
+{
+  "settings": {
+    "db": {
+      "host": "localhost",
+      "port": 5432,
+      "database": "clients"
+    }
   }
 }
 ```
@@ -60,9 +62,11 @@ Next, add another file called `production.json` to the `config/` directory, with
 this content:
 
 ```json
-"settings": {
-  "db": {
-    "host": "prod-db-server"
+{
+  "settings": {
+    "db": {
+      "host": "prod-db-server"
+    }
   }
 }
 ```
