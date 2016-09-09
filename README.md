@@ -79,9 +79,11 @@ const config = require("electrode-confippet").config;
 const db = config.$("settings.db");
 ```
 
-In a development environment, only `default.json` will be loaded. When the
-`NODE_ENV` environment variable is set to `production`, `production.json` will
-be loaded, overwriting the value of `host` in the `db` object.
+In this example, `default.json` will be loaded in all environments, whereas
+`production.json` will be loaded only when the `NODE_ENV` environment variable
+is set to `production`. In that case, the value of `host` in the `db` object
+will be overwritten by the value in `production.json`.
+
 
 ## Config Composition
 
