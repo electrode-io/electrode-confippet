@@ -14,7 +14,7 @@ extended to meet the needs of your app.
     * [Basic Use](#basic-use)
 * [Config Composition](#config-composition)
 * [Environment Variables](#environment-variables)
-* [Templates](#templates)
+* [Using Templates](#using-templates)
 * [Usage in Node Modules](#usage-in-node-modules)
 * [Customization](#customization)
 
