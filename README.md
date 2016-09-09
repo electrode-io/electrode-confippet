@@ -1,121 +1,177 @@
 # Electrode Confippet
 
-Confippet is a versatile utility for managing your NodeJS application configuration.  Its goal is customization and extensibility, but offers a preset config out of the box.  
+Confippet is a versatile, flexible utility for managing configurations of
+Node.js applications. It's simple to get started, and can be customized and
+extended to meet the needs of your app.
 
-If the preset config doesn't meet your needs, you can customize and extend it.
- 
-If you don't want to use the preset config, you can use Confippet's features to create your own.
+<hr>
 
-These are the features available to you:
+## Contents
 
-  * `presetConfig` - Automatically load a preset config object with some default settings.
-  * [composeConfig] - Allows you to compose your configuration from multiple sources.
-  * [processConfig] - Allows you to use templates in your configuration.
-  * [store] - A simple convenient config store to help you access your config.
+* [Features](#features)
+* [Getting Started](#getting-started)
+    * [Installation](#installation)
+    * [Basic Use](#basic-use)
+* [Config Composition](#config-composition)
+* [Environment Variables](#environment-variables)
+* [Templates](#templates)
+* [Usage in Node Modules](#usage-in-node-modules)
+* [Customization](#customization)
 
-## Install
+
+## Features
+
+* **Simple** - Confippet's `presetConfig` automatically composes a single config
+  object from multiple files. For most applications, no further customization is
+  necessary.
+* **Flexible** - Supports JSON, YAML, and JavaScript config files.
+* **Powerful** - Handles complex multi-instance enterprise deployments.
+
+
+## Getting Started
+
+In this example, we'll create two config files: a default file that always
+loads, and a production file that loads only when the `NODE-ENV` environment
+variable is set to `production`. We'll then import those files into a standard
+Node.js app.
+
+### Installation
 
 ```
 npm install electrode-confippet --save
 ```
 
-## Using the Auto Loaded Preset Config
+### Basic Use
 
-Confippet uses `presetConfig` to automatically compose a preset config with some default settings similar to that of the [node-config module].
+Make a `config/` directory inside the main app directory, and put the following
+into a file named `default.json` in that directory:
 
-Typically the preset config is enough to handle an application's configuration management.
-
-If you are not interested in customizing it, then you can just use the preset config without much work.
-
-```js
-const config = require("electrode-confippet").config;
-const url = config.$("settings.url");
+```json
+"settings": {
+  "db": {
+    "host": "localhost",
+    "port": 5432,
+    "database": "clients"
+  }
+}
 ```
 
-> The auto load only occur when you access `Confippet.config` the first time.
+Next, add another file called `production.json` to the `config/` directory, with
+this content:
 
-## Default Config Files Settings
+```json
+"settings": {
+  "db": {
+    "host": "prod-db-server"
+  }
+}
+```
 
-By default, `Confippet.config` will be composed by automatically searching and loading these files under the `config` directory in the order specified:
+Finally, in our Node.js app, we can import Confippet and use the configuration
+we've created:
 
-> This is the same as [node-config files].
+```javascript
+const config = require("electrode-confippet").config;
+const db = config.$("settings.db");
+```
 
-   1. `default.EXT`
-   1. `default-{instance}.EXT`
-   1. `{deployment}.EXT`
-   1. `{deployment}-{instance}.EXT`
-   1. `{short_hostname}.EXT`
-   1. `{short_hostname}-{instance}.EXT`
-   1. `{short_hostname}-{deployment}.EXT`
-   1. `{short_hostname}-{deployment}-{instance}.EXT`
-   1. `{full_hostname}.EXT`
-   1. `{full_hostname}-{instance}.EXT`
-   1. `{full_hostname}-{deployment}.EXT`
-   1. `{full_hostname}-{deployment}-{instance}.EXT`
-   1. `local.EXT`
-   1. `local-{instance}.EXT`
-   1. `local-{deployment}.EXT`
-   1. `local-{deployment}-{instance}.EXT`
-
-**Where**
-
-  * `EXT` can be any of `["json", "yaml", "js"]`.  Confippet will load all of them in that order.
-  * `{instance}` is your app's instance string in multi-instance deployments.  Specified by `NODE_APP_INSTANCE`. 
-  * `{short_hostname}` is your server name up to the first dot.
-  * `{full_hostname}` is your whole server name.
-  * `{deployment}` is your deployment environment.  Specified by `NODE_ENV`.
-
-> After it search and load all the files, it will look for override JSON strings from environment variables.
-
-## Environment Variables
-
-The preset config is composed with settings from the following environment variables.
-
-  * `AUTO_LOAD_CONFIG_OFF` - If this is set, then Confippet will **not** automatically load any configuration into the preset `config` store.  So `Confippet.config` is just an empty store.  You can set this and customize the config structure before loading.
-
-  * `NODE_CONFIG_DIR` - Set the directory to search for config files.  By default, Confippet looks in the `config` directory for config files.
-  
-  * `NODE_ENV` - By default, Confippet load `development` config files after loading `default`.  You can set this to change to a different deployment such as `production`.
-  
-  * `NODE_APP_INSTANCE` - If you have a multi-instances deployment app, you can set this to load instance specific configurations.
-  
-  * `AUTO_LOAD_CONFIG_PROCESS_OFF` - By default, after composing the config from all sources, Confippet will use [processConfig] to process the templates.  You can set this to some value to turn it off.
-  
-  * `NODE_CONFIG` - You can set this to a valid JSON string and Confippet will parse it to override the configuration.
-  
-  * `CONFIPPET*` - You can set any environment variable that starts with `CONFIPPET` and Confippet will parse them as JSON strings to override the configuration.
-
-## Using Templates
-
-In your config files, you can have templates in the config values.  The templates will be resolved with a preset context.
-
-See [processConfig] for more information on config value templates.
+In a development environment, only `default.json` will be loaded. When the
+`NODE_ENV` environment variable is set to `production`, `production.json` will
+be loaded, overwriting the value of `host` in the `db` object.
 
 ## Config Composition
 
-Any config source loaded will be merged into the config store.  So anything that's loaded first can be override by something that's loaded later.
+Confippet's `presetConfig` composes together files in the `config/` directory,
+in the following order:
 
-Objects `{}` are merged together.
+1. `default.EXT`
+1. `default-{instance}.EXT`
+1. `{deployment}.EXT`
+1. `{deployment}-{instance}.EXT`
+1. `{short_hostname}.EXT`
+1. `{short_hostname}-{instance}.EXT`
+1. `{short_hostname}-{deployment}.EXT`
+1. `{short_hostname}-{deployment}-{instance}.EXT`
+1. `{full_hostname}.EXT`
+1. `{full_hostname}-{instance}.EXT`
+1. `{full_hostname}-{deployment}.EXT`
+1. `{full_hostname}-{deployment}-{instance}.EXT`
+1. `local.EXT`
+1. `local-{instance}.EXT`
+1. `local-{deployment}.EXT`
+1. `local-{deployment}-{instance}.EXT`
 
-Primitive values (string, boolean, number) are replaced.
+Where:
 
-***Arrays are replaced.***
+* `EXT` can be any of `["json", "yaml", "js"]`. Confippet will load all of them,
+  in that order. Each time it finds a config file, the values in that file will
+  be loaded and merged into the config store. So `js` overrides `yaml`, which
+  overrides `json`. You can add handlers for other file types and change their
+  loading order—see [composeConfig] for further details.
+* `{instance}` is your app's instance string in multi-instance deployments
+  (specified by the `NODE_APP_INSTANCE` environment variable).
+* `{short_hostname}` is your server name up to the first dot.
+* `{full_hostname}` is your whole server name.
+* `{deployment}` is your deployment environment (specified by the `NODE_ENV`
+  environment variable).
 
-***EXCEPT*** if the key starts with `+` and both source and target are arrays, then they are union together using lodash _.union.
+Overridden values are handled as follows:
 
-## File Types
+* Objects are merged.
+* Primitive values (string, boolean, number) are replaced.
+* **Arrays are replaced**, unless the key starts with `+` *and* both the source
+  and the target are arrays. In that case, the two arrays are joined together
+  using Lodash's `_.union` method.
 
-Confippet supports `json`, `yaml`, and `js` files.  It will search in that order.  Each one found will be loaded and merged into the config store.  So `js` overrides `yaml` overrides `json`.
+After Confippet loads all available configuration files, it will look for
+override JSON strings from the `NODE_CONFIG` and `CONFIPPET*` environment
+variables. See the next section for details.
 
-You can add handlers for different file types and change their loading order.  See [composeConfig] for further details.
+
+## Environment Variables
+
+Confippet reads the following environment variables when composing a config
+store:
+
+* `AUTO_LOAD_CONFIG_OFF` - If this is set, then Confippet will **not**
+  automatically load any configuration into the preset `config` store.
+  `Confippet.config` will be an empty store. This enables you to customize the
+  config structure before loading.
+* `NODE_CONFIG_DIR` - Set the directory to search for config files. By default,
+  Confippet looks in the `config` directory for config files.
+* `NODE_ENV` - By default, Confippet loads `development` config files after
+  loading `default`. Set this environment variable to change to a different
+  deployment, such as `production`.
+* `NODE_APP_INSTANCE` - If your app is deployed to multiple instances, you can
+  set this to load instance-specific configurations.
+* `AUTO_LOAD_CONFIG_PROCESS_OFF` - By default, after composing the config from
+  all sources, Confippet will use [processConfig] to process
+  [templates](#using-templates). You can set this environment variable to
+  disable template processing.
+* `NODE_CONFIG` - You can set this to a valid JSON string and Confippet will
+  parse it to override the configuration.
+* `CONFIPPET*` - Any environment variables that starts with `CONFIPPET` will be
+  parsed as JSON strings to override the configuration.
+
+
+## Using Templates
+
+Values in your config files can be templates, which will be resolved with
+a preset context. See [processConfig] for more information about how to use
+config value templates.
+
 
 ## Usage in Node Modules
 
-If you have a Node module that has its own configurations base on environment, like `NODE_ENV`, you can use Confippet to load config files for your module.
+If you have a Node.js module that has its own configurations based on
+environment variables, like `NODE_ENV`, you can use Confippet to load config
+files for your module.
 
-The example below will use the [default compose options](./lib/default-compose-opts.js) to compose configurations from the directory `config` under the script's directory (`__dirname`).
+The example below will use the [default compose options] to compose
+configurations from the directory `config` under the script's directory
+(`__dirname`).
 
-```js
+```javascript
 const Confippet = require("electrode-confippet");
 
 const options = {
@@ -130,17 +186,23 @@ const defaults = Confippet.store();
 defaults._$.compose(configOptions);
 ```
 
-## Quick Intro to Customizing
 
-The [composeConfig] feature supports a fully customizable and extendable config structure.  Even the preset config structure can be extended since it's composed using the same feature.
+## Customization
 
-If you want to use the preset config, but add an extension handler or insert a source, you can turn off auto loading, and load it yourself with your own options.
+The [composeConfig] feature supports a fully customizable and extendable config
+structure. Even Confippet's own preset config structure can be extended, since
+it's composed using the same feature.
 
-> NOTE this has to happen before any other file tries to access `Confippet.config`.  You should do this in your startup `index.js` file.
+If you want to use the preset config, but add an extension handler or insert
+a source, you can turn off auto loading, and load it yourself with your own
+options.
+
+> **NOTE:** This has to happen before any other file accesses
+> `Confippet.config`. You should do this in your startup `index.js` file.
 
 For example:
 
-```js
+```javascript
 process.env.AUTO_LOAD_CONFIG_OFF = true;
 
 const JSON5 = require("json5");
@@ -164,14 +226,18 @@ Confippet.presetConfig.load(config, {
 });
 ```
 
-The above compose option adds a new provider that looks for a file named by the env var `CUSTOM_CONFIG_SOURCE` and will be loaded after all default sources are loaded (controlled by the order).
+The above compose option adds a new provider that looks for a file named by the
+env var `CUSTOM_CONFIG_SOURCE` and will be loaded after all default sources are
+loaded (controlled by `order`).
 
-It also adds a new extension handler for `json5`, and have it loaded after `json`.
+It also adds a new extension handler, `json5`, to be loaded after `json`.
 
-To further understand the `_$` and the `compose` options.  Please see [store], [composeConfig], and [processConfig] features for details.
+To further understand the `_$` and the `compose` options. Please see [store],
+[composeConfig], and [processConfig] features for details.
 
-[node-config module]: https://github.com/lorenwest/node-config
+[node-config npm module]: https://github.com/lorenwest/node-config
 [node-config files]: https://github.com/lorenwest/node-config/wiki/Configuration-Files
 [store]: ./store.md
 [composeConfig]: ./compose.md
 [processConfig]: ./templates.md
+[default compose options]: ./lib/default-compose-opts.js
