@@ -31,7 +31,7 @@ extended to meet the needs of your app.
 ## Getting Started
 
 In this example, we'll create two config files: a default file that always
-loads, and a production file that loads only when the `NODE-ENV` environment
+loads, and a production file that loads only when the `NODE_ENV` environment
 variable is set to `production`. We'll then import those files into a standard
 Node.js app.
 
