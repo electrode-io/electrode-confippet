@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/electrode-io/electrode-confippet.svg?branch=master)](https://travis-ci.org/electrode-io/electrode-confippet)
+
 # Electrode Confippet
 
 Confippet is a versatile, flexible utility for managing configurations of
