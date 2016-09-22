@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/electrode-io/electrode-confippet.svg?branch=master)](https://travis-ci.org/electrode-io/electrode-confippet)
-
-# Electrode Confippet
+# Electrode Confippet [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 Confippet is a versatile, flexible utility for managing configurations of
 Node.js applications. It's simple to get started, and can be customized and
@@ -249,3 +247,9 @@ documentation for [store], [composeConfig], and [processConfig].
 [composeConfig]: ./compose.md
 [processConfig]: ./templates.md
 [default compose options]: ./lib/default-compose-opts.js
+[npm-image]: https://badge.fury.io/js/electrode-confippet.svg
+[npm-url]: https://npmjs.org/package/electrode-confippet
+[travis-image]: https://travis-ci.org/electrode-io/electrode-confippet.svg?branch=master
+[travis-url]: https://travis-ci.org/electrode-io/electrode-confippet
+[daviddm-image]: https://david-dm.org/electrode-io/electrode-confippet.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/electrode-io/electrode-confippet
