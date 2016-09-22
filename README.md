@@ -191,7 +191,7 @@ const options = {
 };
 
 const defaults = Confippet.store();
-defaults._$.compose(configOptions);
+defaults._$.compose(options);
 ```
 
 
