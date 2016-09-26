@@ -241,6 +241,8 @@ It also adds a new extension handler, `json5`, to be loaded after `json`.
 To further understand the `_$` and the `compose` options, please see the
 documentation for [store], [composeConfig], and [processConfig].
 
+Built with :heart: by [Team Electrode](https://github.com/orgs/electrode-io/people) @WalmartLabs.
+
 [node-config npm module]: https://github.com/lorenwest/node-config
 [node-config files]: https://github.com/lorenwest/node-config/wiki/Configuration-Files
 [store]: ./store.md
