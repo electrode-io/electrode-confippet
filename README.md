@@ -90,6 +90,8 @@ will be overwritten by the value in `production.json`.
 Confippet's `presetConfig` composes together files in the `config/` directory,
 in the following order:
 
+> This is the same as [node-config files].
+
 1. `default.EXT`
 1. `default-{instance}.EXT`
 1. `{deployment}.EXT`
