@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "gulp test",
-    "coverage": "gulp check"
+    "coverage": "gulp check",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "keywords": [],
   "author": "Joel Chen <xchen@walmartlabs.com>",
@@ -19,11 +21,13 @@
   "license": "Apache-2.0",
   "dependencies": {
     "js-yaml": "^3.5.3",
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "snyk": "^1.192.3"
   },
   "devDependencies": {
     "electrode-archetype-njs-module-dev": "^1.0.0",
     "gulp": "^3.9.1",
     "intercept-stdout": "^0.1.2"
-  }
+  },
+  "snyk": true
 }
