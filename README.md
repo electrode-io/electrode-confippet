@@ -1,4 +1,4 @@
-# Electrode Confippet [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# Electrode Confippet [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 Confippet is a versatile, flexible utility for managing configurations of
 Node.js applications. It's simple to get started, and can be customized and

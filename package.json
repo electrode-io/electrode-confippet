@@ -4,8 +4,11 @@
   "description": "Managing NodeJS application configuration",
   "main": "lib/index.js",
   "scripts": {
-    "test": "gulp test",
-    "coverage": "gulp check"
+    "build": "tsc",
+    "test": "xrun --serial [build, xarc/test-only]",
+    "check": "xrun --serial [build, xarc/check]",
+    "prepublishOnly": "xrun --serial [build, xarc/check]",
+    "coverage": "xrun --serial [build, xarc/test-cov]"
   },
   "keywords": [],
   "author": "Joel Chen <xchen@walmartlabs.com>",
@@ -22,8 +25,88 @@
     "lodash": "^4.13.1"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/chai": "^4.2.11",
+    "@types/lodash": "^4.14.168",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.7.6",
+    "@types/sinon": "^9.0.0",
+    "@types/sinon-chai": "^3.2.4",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "@xarc/module-dev": "^2.2.5",
+    "@xarc/run": "^1.0.4",
+    "babel-eslint": "^10.1.0",
+    "chai": "^4.2.0",
     "electrode-archetype-njs-module-dev": "^1.0.0",
-    "gulp": "^3.9.1",
-    "intercept-stdout": "^0.1.2"
+    "eslint": "^6.8.0",
+    "eslint-config-walmart": "^2.2.1",
+    "eslint-plugin-filenames": "^1.1.0",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "intercept-stdout": "^0.1.2",
+    "mocha": "^7.1.0",
+    "nyc": "^15.0.0",
+    "sinon": "^7.2.6",
+    "sinon-chai": "^3.3.0",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "@xarc/module-dev": {
+    "features": [
+      "eslint",
+      "eslintTS",
+      "mocha",
+      "typescript"
+    ]
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register",
+      "source-map-support/register",
+      "@xarc/module-dev/config/test/setup.js"
+    ],
+    "recursive": true
+  },
+  "nyc": {
+    "extends": [
+      "@istanbuljs/nyc-config-typescript"
+    ],
+    "all": true,
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "exclude": [
+      "*clap.js",
+      "*clap.ts",
+      "coverage",
+      "dist",
+      "docs",
+      "gulpfile.js",
+      "test",
+      "xrun*.js",
+      "xrun*.ts",
+      "src",
+      "lib/*.ts"
+    ],
+    "check-coverage": true,
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "cache": false,
+    "exclude-after-remap": false
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/@xarc/module-dev/config/eslint/.eslintrc-node"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    }
   }
 }

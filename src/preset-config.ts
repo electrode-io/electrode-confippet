@@ -1,6 +1,4 @@
-"use strict";
-
-const util = require("./util");
+import util from "./util";
 
 function load(config, options) {
   options = options || {};
@@ -41,7 +39,7 @@ function autoLoad(config, options) {
   }
 }
 
-module.exports = {
+export = {
   load,
   autoLoad
 };

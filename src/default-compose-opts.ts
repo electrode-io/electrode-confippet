@@ -1,12 +1,9 @@
-"use strict";
-
-const providerTypes = require("./provider-types");
-const util = require("./util");
+import providerTypes from "./provider-types";
+import util from "./util";
 
 const envOrder = 1000;
 const confippetEnvOrder = 2000;
-
-module.exports = function () {
+function defaultOpts () {
   return {
     dir: "config",
     extSearch: ["json", "yaml", "js"],
@@ -24,103 +21,103 @@ module.exports = function () {
     // types: required, optional, warn, disabled
     //
     providers: {
-      "default": {
+      default: {
         name: "default",
         filter: ["{{defaultFilter}}"],
         type: "{{defaultType}}",
         order: 100
       },
-      "defaultInstance": {
+      defaultInstance: {
         name: "default-{{instance}}",
         filter: ["{{defaultFilter}}", "{{instance}}"],
         type: providerTypes.warn,
         order: 120
       },
-      "deployment": {
+      deployment: {
         name: "{{deployment}}",
         filter: ["{{defaultFilter}}"],
         type: "{{defaultType}}",
         order: 140
       },
-      "deploymentInstance": {
+      deploymentInstance: {
         name: "{{deployment}}-{{instance}}",
         filter: ["{{defaultFilter}}", "{{instance}}"],
         type: providerTypes.warn,
         order: 160
       },
-      "hostname": {
+      hostname: {
         name: "{{hostname}}",
         filter: ["{{defaultFilter}}"],
         type: providerTypes.optional,
         order: 180
       },
-      "hostnameInstance": {
+      hostnameInstance: {
         name: "{{hostname}}-{{instance}}",
         filter: ["{{defaultFilter}}", "{{hostname}}", "{{instance}}"],
         type: providerTypes.optional,
         order: 200
       },
-      "hostnameDeployment": {
+      hostnameDeployment: {
         name: "{{hostname}}-{{deployment}}",
         filter: ["{{defaultFilter}}", "{{hostname}}"],
         type: providerTypes.optional,
         order: 220
       },
-      "hostnameDeploymentInstance": {
+      hostnameDeploymentInstance: {
         name: "{{hostname}}-{{deployment}}-{{instance}}",
         filter: ["{{defaultFilter}}", "{{hostname}}", "{{instance}}"],
         type: providerTypes.optional,
         order: 240
       },
-      "fullHostname": {
+      fullHostname: {
         name: "{{fullHostname}}",
         filter: ["{{defaultFilter}}", "{{fullHostname}}"],
         type: providerTypes.optional,
         order: 260
       },
-      "fullHostnameInstance": {
+      fullHostnameInstance: {
         name: "{{fullHostname}}-{{instance}}",
         filter: ["{{defaultFilter}}", "{{fullHostname}}", "{{instance}}"],
         type: providerTypes.warn,
         order: 280
       },
-      "fullHostnameDeployment": {
+      fullHostnameDeployment: {
         name: "{{fullHostname}}-{{deployment}}",
         filter: ["{{defaultFilter}}", "{{fullHostname}}"],
         type: providerTypes.optional,
         order: 300
       },
-      "fullHostnameDeploymentInstance": {
+      fullHostnameDeploymentInstance: {
         name: "{{fullHostname}}-{{deployment}}-{{instance}}",
         filter: ["{{defaultFilter}}", "{{fullHostname}}", "{{instance}}"],
         type: providerTypes.warn,
         order: 320
       },
-      "local": {
+      local: {
         name: "local",
         filter: ["{{defaultFilter}}"],
         type: providerTypes.optional,
         order: 340
       },
-      "localInstance": {
+      localInstance: {
         name: "local-{{instance}}",
         filter: ["{{defaultFilter}}", "{{instance}}"],
         type: providerTypes.warn,
         order: 360
       },
-      "localDeployment": {
+      localDeployment: {
         name: "local-{{deployment}}",
         filter: ["{{defaultFilter}}"],
         type: providerTypes.optional,
         order: 380
       },
-      "localDeploymentInstance": {
+      localDeploymentInstance: {
         name: "local-{{deployment}}-{{instance}}",
         filter: ["{{defaultFilter}}", "{{instance}}"],
         type: providerTypes.warn,
         order: 400
       },
-      "env": {
+      env: {
         filter: ["{{defaultFilter}}"],
         type: providerTypes.disabled,
         handler: function () {
@@ -133,7 +130,7 @@ module.exports = function () {
         },
         order: envOrder
       },
-      "confippetEnv": {
+      confippetEnv: {
         filter: ["{{defaultFilter}}"],
         type: providerTypes.required,
         handler: function () {
@@ -159,4 +156,6 @@ module.exports = function () {
       defaultFilter: "enabled" // NOTE: set this to "" or undefined to disable all default providers
     }
   };
-};
+}
+
+export = defaultOpts;

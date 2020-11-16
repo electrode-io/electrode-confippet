@@ -137,3 +137,5 @@ node_modules
 
 .tmp
 .npmrc
+lib/
+.nyc_output/

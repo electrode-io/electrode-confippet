@@ -1,13 +1,11 @@
-"use strict";
-
-const Path = require("path");
-const fs = require("fs");
-const _ = require("lodash");
-const assert = require("assert");
-const defaultOpts = require("./default-compose-opts");
-const providerTypes = require("./provider-types");
-const processConfig = require("./process-config");
-const util = require("./util");
+import * as Path from "path";
+import * as fs from "fs";
+import _ from "lodash";
+import assert from "assert";
+import defaultOpts from "./default-compose-opts";
+import providerTypes from "./provider-types";
+import processConfig from "./process-config";
+import util from "./util";
 
 /* eslint-disable max-statements */
 function composeConfigDir(dir, data, options) {
@@ -25,6 +23,8 @@ function composeConfigDir(dir, data, options) {
         util.uMerge(data, handlers[ext](fullF));
         return ext;
       }
+
+      return undefined;
     }).filter((x) => x);
 
     if (_.isEmpty(found)) {
@@ -110,4 +110,4 @@ function composeConfig(options) {
   return data;
 }
 
-module.exports = composeConfig;
+export = composeConfig;

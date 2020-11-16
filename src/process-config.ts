@@ -1,7 +1,5 @@
-"use strict";
-
-const _ = require("lodash");
-const fs = require("fs");
+import _ from "lodash";
+import * as fs from "fs";
 
 function processObj(obj, data) {
   const depthPath = data.depth.join(".");
@@ -29,7 +27,12 @@ function processObj(obj, data) {
         return x({
           context: data.context,
           config: data.config,
-          obj, key: k, value: v, tmpl, params: _.drop(refs), depthPath
+          obj,
+          key: k,
+          value: v,
+          tmpl,
+          params: _.drop(refs),
+          depthPath
         });
 
       } else if (_.isUndefined(x)) {
@@ -73,6 +76,7 @@ function processConfig(config, options) {
       }
       throw new Error("config file readFile template missing filename");
     },
+
     getEnv: (data) => {
       if (data.params[0]) {
         let value = process.env[data.params[0]];
@@ -86,6 +90,7 @@ function processConfig(config, options) {
         }
         return value;
       }
+      return undefined;
     }
   };
 
@@ -105,4 +110,4 @@ function processConfig(config, options) {
   return data.missing;
 }
 
-module.exports = processConfig;
+export = processConfig;

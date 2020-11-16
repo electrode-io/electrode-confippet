@@ -1,8 +1,7 @@
-"use strict";
-const _ = require("lodash");
-const processConfig = require("./process-config");
-const composeConfig = require("./compose-config");
-const util = require("./util");
+import * as _ from "lodash";
+import processConfig from "./process-config";
+import composeConfig from "./compose-config";
+import util from "./util";
 
 function hideProperties(obj, props) {
   props.forEach((prop) => {
@@ -15,6 +14,7 @@ function hideProperties(obj, props) {
 }
 
 class Config {
+  store: any;
   constructor(store) {
     this.store = store;
   }
@@ -48,7 +48,7 @@ function $get(p) {
 }
 
 function factory() {
-  const store = {};
+  const store: any = {};
 
   store.$ = $get;
 
@@ -59,4 +59,4 @@ function factory() {
   return store;
 }
 
-module.exports = factory;
+export = factory;

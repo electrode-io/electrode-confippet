@@ -1,9 +1,7 @@
-"use strict";
+import * as jsYaml from "js-yaml";
+import * as fs from "fs";
 
-const jsYaml = require("js-yaml");
-const fs = require("fs");
-
-module.exports = {
+export = {
   json: require,
   js: require,
   yaml: (fullF) => jsYaml.load(fs.readFileSync(fullF, "utf8"))

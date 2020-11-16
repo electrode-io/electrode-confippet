@@ -1,6 +1,4 @@
-"use strict";
-
-module.exports = {
+export = {
   required: "required",
   disabled: "disabled",
   optional: "optional",

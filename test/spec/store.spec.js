@@ -91,4 +91,3 @@ describe("store", function () {
     expect(store.$("arr[2].b")).to.equal(50);
   });
 });
-
