@@ -38,7 +38,6 @@
     "@xarc/run": "^1.0.4",
     "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
-    "electrode-archetype-njs-module-dev": "^1.0.0",
     "eslint": "^6.8.0",
     "eslint-config-walmart": "^2.2.1",
     "eslint-plugin-filenames": "^1.1.0",
