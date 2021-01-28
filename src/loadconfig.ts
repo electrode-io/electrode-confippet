@@ -6,7 +6,15 @@ const uniqueKey = (stringArray: any) => {
   return stringArray.join("");
 };
 
-export = (composeOptions, defaults, refresh) => {
+/**
+ * typedoc comments
+ *
+ * @param composeOptions Confippet compose Options
+ * @param defaults default config values
+ * @param refresh should the config be refreshed
+ * @returns returns config
+ */
+export const loadConfig = (composeOptions, defaults, refresh) => {
   const cacheKey = uniqueKey(composeOptions.dirs);
   let config = configs[cacheKey];
 
