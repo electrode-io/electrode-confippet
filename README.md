@@ -8,25 +8,23 @@ extended to meet the needs of your app.
 
 ## Contents
 
-* [Features](#features)
-* [Getting Started](#getting-started)
-    * [Installation](#installation)
-    * [Basic Use](#basic-use)
-* [Config Composition](#config-composition)
-* [Environment Variables](#environment-variables)
-* [Using Templates](#using-templates)
-* [Usage in Node Modules](#usage-in-node-modules)
-* [Customization](#customization)
-
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Basic Use](#basic-use)
+- [Config Composition](#config-composition)
+- [Environment Variables](#environment-variables)
+- [Using Templates](#using-templates)
+- [Usage in Node Modules](#usage-in-node-modules)
+- [Customization](#customization)
 
 ## Features
 
-* **Simple** - Confippet's `presetConfig` automatically composes a single config
+- **Simple** - Confippet's `presetConfig` automatically composes a single config
   object from multiple files. For most applications, no further customization is
   necessary.
-* **Flexible** - Supports JSON, YAML, and JavaScript config files.
-* **Powerful** - Handles complex multi-instance enterprise deployments.
-
+- **Flexible** - Supports JSON, YAML, and JavaScript config files.
+- **Powerful** - Handles complex multi-instance enterprise deployments.
 
 ## Getting Started
 
@@ -84,7 +82,6 @@ In this example, `default.json` will be loaded in all environments, whereas
 is set to `production`. In that case, the value of `host` in the `db` object
 will be overwritten by the value in `production.json`.
 
-
 ## Config Composition
 
 Confippet's `presetConfig` composes together files in the `config/` directory,
@@ -111,23 +108,23 @@ in the following order:
 
 Where:
 
-* `EXT` can be any of `["json", "yaml", "js"]`. Confippet will load all of them,
+- `EXT` can be any of `["json", "yaml", "js"]`. Confippet will load all of them,
   in that order. Each time it finds a config file, the values in that file will
   be loaded and merged into the config store. So `js` overrides `yaml`, which
   overrides `json`. You can add handlers for other file types and change their
   loading order—see [composeConfig] for further details.
-* `{instance}` is your app's instance string in multi-instance deployments
+- `{instance}` is your app's instance string in multi-instance deployments
   (specified by the `NODE_APP_INSTANCE` environment variable).
-* `{short_hostname}` is your server name up to the first dot.
-* `{full_hostname}` is your whole server name.
-* `{deployment}` is your deployment environment (specified by the `NODE_ENV`
+- `{short_hostname}` is your server name up to the first dot.
+- `{full_hostname}` is your whole server name.
+- `{deployment}` is your deployment environment (specified by the `NODE_ENV`
   environment variable).
 
 Overridden values are handled as follows:
 
-* Objects are merged.
-* Primitive values (string, boolean, number) are replaced.
-* **Arrays are replaced**, unless the key starts with `+` *and* both the source
+- Objects are merged.
+- Primitive values (string, boolean, number) are replaced.
+- **Arrays are replaced**, unless the key starts with `+` _and_ both the source
   and the target are arrays. In that case, the two arrays are joined together
   using Lodash's `_.union` method.
 
@@ -135,39 +132,36 @@ After Confippet loads all available configuration files, it will look for
 override JSON strings from the `NODE_CONFIG` and `CONFIPPET*` environment
 variables. See the next section for details.
 
-
 ## Environment Variables
 
 Confippet reads the following environment variables when composing a config
 store:
 
-* `AUTO_LOAD_CONFIG_OFF` - If this is set, then Confippet will **not**
+- `AUTO_LOAD_CONFIG_OFF` - If this is set, then Confippet will **not**
   automatically load any configuration into the preset `config` store.
   `Confippet.config` will be an empty store. This enables you to customize the
   config structure before loading.
-* `NODE_CONFIG_DIR` - Set the directory to search for config files. By default,
+- `NODE_CONFIG_DIR` - Set the directory to search for config files. By default,
   Confippet looks in the `config` directory for config files.
-* `NODE_ENV` - By default, Confippet loads `development` config files after
+- `NODE_ENV` - By default, Confippet loads `development` config files after
   loading `default`. Set this environment variable to change to a different
   deployment, such as `production`.
-* `NODE_APP_INSTANCE` - If your app is deployed to multiple instances, you can
+- `NODE_APP_INSTANCE` - If your app is deployed to multiple instances, you can
   set this to load instance-specific configurations.
-* `AUTO_LOAD_CONFIG_PROCESS_OFF` - By default, after composing the config from
+- `AUTO_LOAD_CONFIG_PROCESS_OFF` - By default, after composing the config from
   all sources, Confippet will use [processConfig] to process
   [templates](#using-templates). You can set this environment variable to
   disable template processing.
-* `NODE_CONFIG` - You can set this to a valid JSON string and Confippet will
+- `NODE_CONFIG` - You can set this to a valid JSON string and Confippet will
   parse it to override the configuration.
-* `CONFIPPET*` - Any environment variables that starts with `CONFIPPET` will be
+- `CONFIPPET*` - Any environment variables that starts with `CONFIPPET` will be
   parsed as JSON strings to override the configuration.
-
 
 ## Using Templates
 
 Values in your config files can be templates, which will be resolved with
 a preset context. See [processConfig] for more information about how to use
 config value templates.
-
 
 ## Usage in Node Modules
 
@@ -186,14 +180,16 @@ const options = {
   dirs: [Path.join(__dirname, "config")],
   warnMissing: false,
   context: {
-    deployment: process.env.NODE_ENV
-  }
+    deployment: process.env.NODE_ENV,
+  },
 };
 
-const defaults = Confippet.store();
-defaults._$.compose(options);
-```
+const defaults = {
+  foo: "bar",
+};
 
+const config = Confippet.loadConfig(options, defaults /* refresh: true */);
+```
 
 ## Customization
 
@@ -228,9 +224,9 @@ Confippet.presetConfig.load(config, {
     customConfig: {
       name: "{{env.CUSTOM_CONFIG_SOURCE}}",
       order: 300,
-      type: Confippet.providerTypes.required
-    }
-  }
+      type: Confippet.providerTypes.required,
+    },
+  },
 });
 ```
 
@@ -248,8 +244,8 @@ Built with :heart: by [Team Electrode](https://github.com/orgs/electrode-io/peop
 [node-config npm module]: https://github.com/lorenwest/node-config
 [node-config files]: https://github.com/lorenwest/node-config/wiki/Configuration-Files
 [store]: ./store.md
-[composeConfig]: ./compose.md
-[processConfig]: ./templates.md
+[composeconfig]: ./compose.md
+[processconfig]: ./templates.md
 [default compose options]: ./lib/default-compose-opts.js
 [npm-image]: https://badge.fury.io/js/electrode-confippet.svg
 [npm-url]: https://npmjs.org/package/electrode-confippet
