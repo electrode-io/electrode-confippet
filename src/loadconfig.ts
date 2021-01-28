@@ -7,7 +7,7 @@ const uniqueKey = (stringArray: any) => {
 };
 
 /**
- * typedoc comments
+ * load a configuration by passing composeOptions, and default options if desired
  *
  * @param composeOptions Confippet compose Options
  * @param defaults default config values
