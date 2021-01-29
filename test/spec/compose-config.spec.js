@@ -1,5 +1,3 @@
-"use strict";
-
 const Path = require("path");
 const providerTypes = require("../../lib/provider-types");
 const intercept = require("intercept-stdout");
@@ -17,11 +15,11 @@ describe("confippet composeConfig", function () {
     });
 
     const result = util.merge({
-      "foo": {
-        "bar": "env"
+      foo: {
+        bar: "env"
       },
-      "node": {
-        "config": "xyz"
+      node: {
+        config: "xyz"
       }
     }, composedResult());
 
@@ -120,7 +118,7 @@ describe("confippet composeConfig", function () {
         failMissing: false,
         warnMissing: false,
         providers: {
-          "a": {
+          a: {
             handler: () => {
             }
           }
@@ -168,14 +166,14 @@ describe("confippet composeConfig", function () {
       warnMissing: false,
       providerList: ["a", "b", "c", "e"],
       providers: {
-        "c": {
+        c: {
           type: providerTypes.required,
           handler: () => {
             cCalled = true;
           },
           order: "-2"
         },
-        "b": {
+        b: {
           type: providerTypes.required,
           handler: () => {
             expect(cCalled).to.equal(true);
@@ -184,19 +182,19 @@ describe("confippet composeConfig", function () {
           filter: "enabled",
           order: 0
         },
-        "a": {
+        a: {
           type: providerTypes.required,
           handler: () => {
             expect(bCalled).to.equal(false);
           }
         },
-        "d": {
+        d: {
           type: providerTypes.required,
           handler: () => {
             throw new Error("not expect provider d to be called");
           }
         },
-        "e": {
+        e: {
           type: providerTypes.required,
           handler: () => {
             throw new Error("not expect provider e to be called");
