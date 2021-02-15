@@ -43,7 +43,7 @@ describe("preset-config", function () {
     process.env.NODE_CONFIG = JSON.stringify({
       tx: "{{config.json}}"
     });
-    presetConfig.autoLoad(config, {dir: "test/config"});
+    presetConfig.autoLoad(config, { dir: "test/config" });
     expect(config.$("tx")).to.equal("json");
     delete config.tx;
     expect(config).to.deep.equal(result);
@@ -52,7 +52,7 @@ describe("preset-config", function () {
   it("should not auto load if AUTO_LOAD_CONFIG_OFF is set", () => {
     expect(config).to.deep.equal({});
     process.env.AUTO_LOAD_CONFIG_OFF = "true";
-    presetConfig.autoLoad(config, {dir: "test/config"});
+    presetConfig.autoLoad(config, { dir: "test/config" });
     expect(config).to.deep.equal({});
   });
 
@@ -63,7 +63,7 @@ describe("preset-config", function () {
     process.env.NODE_CONFIG = JSON.stringify({
       tx: "{{config.json}}"
     });
-    presetConfig.autoLoad(config, {dir: "test/config"});
+    presetConfig.autoLoad(config, { dir: "test/config" });
     expect(config.$("tx")).to.equal("{{config.json}}");
     delete config.tx;
     expect(config).to.deep.equal(result);

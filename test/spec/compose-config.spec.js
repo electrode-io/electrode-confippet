@@ -14,20 +14,23 @@ describe("confippet composeConfig", function () {
       }
     });
 
-    const result = util.merge({
-      foo: {
-        bar: "env"
+    const result = util.merge(
+      {
+        foo: {
+          bar: "env"
+        },
+        node: {
+          config: "xyz"
+        }
       },
-      node: {
-        config: "xyz"
-      }
-    }, composedResult());
+      composedResult()
+    );
 
     process.env.CONFIPPET_0 = JSON.stringify({
-      foo: {bar: "env"}
+      foo: { bar: "env" }
     });
     process.env.NODE_CONFIG = JSON.stringify({
-      node: {config: "xyz"}
+      node: { config: "xyz" }
     });
     const data = Confippet.composeConfig({
       dir: Path.join(__dirname, "../config"),
@@ -64,7 +67,7 @@ describe("confippet composeConfig", function () {
 
   it("should not fail required when requested not to", function () {
     process.env.CONFIPPET_0 = JSON.stringify({
-      foo: {bar: "env"}
+      foo: { bar: "env" }
     });
     const data = Confippet.composeConfig({
       dir: Path.join(__dirname, "../data"),
@@ -109,7 +112,7 @@ describe("confippet composeConfig", function () {
   });
 
   it("should throw when no config provided", function () {
-    expect(() => Confippet.composeConfig({useDefaults: false})).to.throw(Error);
+    expect(() => Confippet.composeConfig({ useDefaults: false })).to.throw(Error);
   });
 
   it("should throw when provider type missing", function () {
@@ -119,8 +122,7 @@ describe("confippet composeConfig", function () {
         warnMissing: false,
         providers: {
           a: {
-            handler: () => {
-            }
+            handler: () => {}
           }
         }
       });

@@ -8,8 +8,8 @@ describe("confippet loadConfig", function () {
       {
         dirs: [path.join(__dirname, "../config1")],
         context: {
-          deployment: "default",
-        },
+          deployment: "default"
+        }
       },
       { foo: "bar" }
     );
@@ -23,8 +23,8 @@ describe("confippet loadConfig", function () {
       {
         dirs: [path.join(__dirname, "../config1")],
         context: {
-          deployment: "default",
-        },
+          deployment: "default"
+        }
       },
       { foo: "bar2" }
     );
@@ -40,8 +40,8 @@ describe("confippet loadConfig", function () {
       {
         dirs: [path.join(__dirname, "../config1")],
         context: {
-          deployment: "default",
-        },
+          deployment: "default"
+        }
       },
       { foo: "bar2" },
       true

@@ -3,7 +3,7 @@ import util from "./util";
 
 const envOrder = 1000;
 const confippetEnvOrder = 2000;
-function defaultOpts () {
+function defaultOpts() {
   return {
     dir: "config",
     extSearch: ["json", "yaml", "js"],
@@ -126,7 +126,7 @@ function defaultOpts () {
             env[k] = process.env[k];
           });
 
-          return {env};
+          return { env };
         },
         order: envOrder
       },
@@ -145,7 +145,6 @@ function defaultOpts () {
         },
         order: confippetEnvOrder
       }
-
     },
     context: {
       deployment: "development",

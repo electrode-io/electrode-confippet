@@ -15,20 +15,23 @@ function composeConfigDir(dir, data, options) {
   dir = Path.resolve(dir);
 
   const load = (key, provider) => {
-    const found = exts.map((ext) => {
-      const fullF = Path.join(dir, `${provider.name}.${ext}`);
+    const found = exts
+      .map((ext) => {
+        const fullF = Path.join(dir, `${provider.name}.${ext}`);
 
-      if (fs.existsSync(fullF)) {
-        assert(handlers[ext], `Config handler for extension ${ext} missing`);
-        util.uMerge(data, handlers[ext](fullF));
-        return ext;
-      }
+        if (fs.existsSync(fullF)) {
+          assert(handlers[ext], `Config handler for extension ${ext} missing`);
+          util.uMerge(data, handlers[ext](fullF));
+          return ext;
+        }
 
-      return undefined;
-    }).filter((x) => x);
+        return undefined;
+      })
+      .filter((x) => x);
 
     if (_.isEmpty(found)) {
-      const msg = `Config provider ${key}: no file ${provider.name} of ` +
+      const msg =
+        `Config provider ${key}: no file ${provider.name} of ` +
         `extensions ${exts} found in ${dir}`;
 
       if (provider.type === providerTypes.required) {
@@ -52,8 +55,11 @@ function composeConfigDir(dir, data, options) {
   const isEnable = (p) => {
     const x = p.filter;
     assert(p.type, "config provider type must be specified");
-    return p.type !== providerTypes.disabled && (p.name || p.handler) &&
-      (x === undefined ? true : !filterOff(x));
+    return (
+      p.type !== providerTypes.disabled &&
+      (p.name || p.handler) &&
+      (x === undefined ? true : !filterOff(x))
+    );
   };
 
   const num = (x) => {
@@ -72,7 +78,8 @@ function composeConfigDir(dir, data, options) {
 
   assert(list.length > 0, "config providers empty");
 
-  list.sort((a, b) => order(providers[a]) - order(providers[b]))
+  list
+    .sort((a, b) => order(providers[a]) - order(providers[b]))
     .forEach((k) => {
       const p = providers[k];
       if (p.handler) {

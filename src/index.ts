@@ -17,11 +17,11 @@ const confippet = {
   providerTypes: providerTypes,
   extHandlers: extHandlers,
   util: util,
-  loadConfig: loadConfig,
+  loadConfig: loadConfig
 };
 
 Object.defineProperty(confippet, "config", {
-  get: () => require("../config"),
+  get: () => require("../config")
 });
 
 export = confippet;

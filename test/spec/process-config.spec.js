@@ -96,7 +96,6 @@ describe("processConfig", function () {
       }
     };
 
-
     process.env.NODE_APP_INSTANCE = 5;
     process.env.NODE_ENV = "development";
     process.env.foo1 = "FooBar";
@@ -131,7 +130,6 @@ describe("processConfig", function () {
     expect(missing[1].value).to.equal("{{config.bad1.bad2}}");
     expect(missing[2].path).to.equal("config.badN1.badN2.badN3");
     expect(missing[2].value).to.equal("{{config.badx.bady}}");
-
   });
 
   it("should throw error if readFile missing filename", () => {
@@ -147,7 +145,6 @@ describe("processConfig", function () {
     };
     expect(() => Confippet.processConfig(config)).to.throw();
   });
-
 
   it("should throw error for circular templates", () => {
     const config = {

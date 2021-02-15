@@ -16,7 +16,6 @@ function processObj(obj, data) {
       const refs = tmpl.split(":");
       const path = refs[0];
 
-
       if (path.startsWith("-")) {
         return path.substr(1);
       }
@@ -34,11 +33,9 @@ function processObj(obj, data) {
           params: _.drop(refs),
           depthPath
         });
-
       } else if (_.isUndefined(x)) {
-        data.missing.push({path: `${depthPath}.${k}`, value: v, tmpl});
+        data.missing.push({ path: `${depthPath}.${k}`, value: v, tmpl });
         return "";
-
       } else {
         const extras = _(refs).drop().map(resolve).value().join("");
         return `${x}${extras}`;
@@ -96,7 +93,7 @@ function processConfig(config, options) {
 
   _.defaults(context, options.context);
 
-  const data = {config, context, options, more: 1, missing: [], depth: ["config"]};
+  const data = { config, context, options, more: 1, missing: [], depth: ["config"] };
   const maxRun = 20;
 
   for (let i = 0; data.more > 0; i++) {

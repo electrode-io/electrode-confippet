@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 
 const util = {
-  replaceArray: (a, b) => _.isArray(b) && b || undefined,
+  replaceArray: (a, b) => (_.isArray(b) && b) || undefined,
   merge: function (...args) {
     Array.prototype.push.call(args, util.replaceArray);
     return _.mergeWith.apply(_, args); // eslint-disable-line

@@ -139,3 +139,4 @@ node_modules
 .npmrc
 lib/
 .nyc_output/
+*-lock*

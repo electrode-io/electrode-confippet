@@ -8,11 +8,7 @@ describe("store", function () {
     store._$.use({
       foo: {
         x: {
-          val: [
-            "bar",
-            "blah",
-            "hello"
-          ]
+          val: ["bar", "blah", "hello"]
         }
       }
     });
