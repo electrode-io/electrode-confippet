@@ -6,7 +6,7 @@ const confippetEnvOrder = 2000;
 function defaultOpts() {
   return {
     dir: "config",
-    extSearch: ["json", "yaml", "js"],
+    extSearch: ["json", "yaml", "js", "ts"],
     extHandlers: require("./ext-handlers"), // eslint-disable-line
     failMissing: true, // whether fails if a required provider missing
     warnMissing: true, // whether warns if a warn provider missing

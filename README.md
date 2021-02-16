@@ -8,15 +8,17 @@ extended to meet the needs of your app.
 
 ## Contents
 
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Basic Use](#basic-use)
-- [Config Composition](#config-composition)
-- [Environment Variables](#environment-variables)
-- [Using Templates](#using-templates)
-- [Usage in Node Modules](#usage-in-node-modules)
-- [Customization](#customization)
+- [Electrode Confippet ![NPM version](#electrode-confippet-npm-versionnpm-url-build-statustravis-imagetravis-url)
+  - [Contents](#contents)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+    - [Basic Use](#basic-use)
+  - [Config Composition](#config-composition)
+  - [Environment Variables](#environment-variables)
+  - [Using Templates](#using-templates)
+  - [Usage in Node Modules](#usage-in-node-modules)
+  - [Customization](#customization)
 
 ## Features
 
@@ -180,12 +182,12 @@ const options = {
   dirs: [Path.join(__dirname, "config")],
   warnMissing: false,
   context: {
-    deployment: process.env.NODE_ENV,
-  },
+    deployment: process.env.NODE_ENV
+  }
 };
 
 const defaults = {
-  foo: "bar",
+  foo: "bar"
 };
 
 const config = Confippet.loadConfig(options, defaults /* refresh: true */);
@@ -224,9 +226,9 @@ Confippet.presetConfig.load(config, {
     customConfig: {
       name: "{{env.CUSTOM_CONFIG_SOURCE}}",
       order: 300,
-      type: Confippet.providerTypes.required,
-    },
-  },
+      type: Confippet.providerTypes.required
+    }
+  }
 });
 ```
 
