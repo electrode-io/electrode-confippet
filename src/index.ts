@@ -7,7 +7,7 @@ import store from "./store";
 import providerTypes from "./provider-types";
 import util from "./util";
 import extHandlers from "./ext-handlers";
-import { loadConfig } from "./loadconfig";
+import { loadConfig } from "./load-config";
 
 const confippet = {
   processConfig: processConfig,
@@ -17,11 +17,11 @@ const confippet = {
   providerTypes: providerTypes,
   extHandlers: extHandlers,
   util: util,
-  loadConfig: loadConfig
+  loadConfig: loadConfig,
 };
 
 Object.defineProperty(confippet, "config", {
-  get: () => require("../config")
+  get: () => require("../config"),
 });
 
 export = confippet;

@@ -4,11 +4,12 @@
   "description": "Managing NodeJS application configuration",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "xrun --serial [build, xarc/test-only]",
-    "check": "xrun --serial [build, xarc/check]",
-    "prepublishOnly": "xrun --serial [build, xarc/check]",
-    "coverage": "xrun --serial [build, xarc/test-cov]"
+    "build": "rm -rf lib && tsc",
+    "test": "xrun xarc/test-only",
+    "check": "xrun --serial build xarc/check",
+    "prepublishOnly": "xrun [[build, docs], xarc/check]",
+    "coverage": "xrun --serial build xarc/test-cov",
+    "docs": "xrun xarc/docs"
   },
   "keywords": [],
   "author": "Joel Chen <xchen@walmartlabs.com>",
@@ -22,50 +23,38 @@
   "license": "Apache-2.0",
   "dependencies": {
     "js-yaml": "^3.5.3",
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "tslib": "^2.1.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/chai": "^4.2.11",
+    "@types/chai": "^4.2.14",
     "@types/lodash": "^4.14.168",
-    "@types/mocha": "^7.0.2",
-    "@types/node": "^13.7.6",
-    "@types/sinon": "^9.0.0",
-    "@types/sinon-chai": "^3.2.4",
-    "@typescript-eslint/eslint-plugin": "^2.21.0",
-    "@typescript-eslint/parser": "^2.21.0",
-    "@xarc/module-dev": "^2.2.5",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.16",
+    "@types/sinon": "^9.0.10",
+    "@types/sinon-chai": "^3.2.5",
+    "@xarc/module-dev": "^3.2.1",
     "@xarc/run": "^1.0.4",
-    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-walmart": "^2.2.1",
-    "eslint-plugin-filenames": "^1.1.0",
-    "eslint-plugin-jsdoc": "^21.0.0",
     "intercept-stdout": "^0.1.2",
-    "mocha": "^7.1.0",
-    "nyc": "^15.0.0",
-    "sinon": "^7.2.6",
-    "sinon-chai": "^3.3.0",
-    "source-map-support": "^0.5.16",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1",
+    "sinon": "^9.2.2",
+    "sinon-chai": "^3.5.0",
+    "source-map-support": "^0.5.19",
+    "ts-node": "^9.1.1",
+    "typedoc": "^0.20.13",
+    "typescript": "^4.1.3"
   },
   "@xarc/module-dev": {
     "features": [
-      "eslint",
-      "eslintTS",
       "mocha",
+      "prettier",
+      "typedoc",
       "typescript"
     ]
-  },
-  "mocha": {
-    "require": [
-      "ts-node/register",
-      "source-map-support/register",
-      "@xarc/module-dev/config/test/setup.js"
-    ],
-    "recursive": true
   },
   "nyc": {
     "extends": [
@@ -84,11 +73,11 @@
       "dist",
       "docs",
       "gulpfile.js",
+      "lib/*.ts",
+      "src",
       "test",
       "xrun*.js",
-      "xrun*.ts",
-      "src",
-      "lib/*.ts"
+      "xrun*.ts"
     ],
     "check-coverage": true,
     "statements": 100,
@@ -107,5 +96,20 @@
       "ecmaVersion": 2020,
       "sourceType": "module"
     }
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "mocha": {
+    "require": [
+      "ts-node/register",
+      "source-map-support/register",
+      "@xarc/module-dev/config/test/setup.js"
+    ],
+    "recursive": true
+  },
+  "prettier": {
+    "printWidth": 100
   }
 }
