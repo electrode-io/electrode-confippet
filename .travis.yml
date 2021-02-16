@@ -6,4 +6,4 @@ node_js:
   - v10
 
 script:
-  - npm check
+  - npm run check
