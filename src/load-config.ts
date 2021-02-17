@@ -102,6 +102,9 @@ export type LoadOptions = {
   /** Enable `console.log` noises about what's happening */
   verbose?: boolean;
 
+  /** set to `false` to skip cache, load and return a new copy, **Default**: `true` */
+  cache?: boolean;
+
   /**
    * Environment setting context
    *
@@ -133,17 +136,21 @@ const CACHED = Symbol("confippet loadConfig cached config");
  * @returns returns config
  */
 export const loadConfig = (options: LoadOptions, defaults?: unknown, refresh?: boolean) => {
+  const cache = options.cache !== false;
+
   const cacheKey = Path.resolve(options.dir);
 
-  const config = configs[cacheKey] || store();
+  const config = (cache && configs[cacheKey]) || store();
 
-  if (!config[CACHED] || refresh) {
+  if (!cache || !config[CACHED] || refresh) {
     config._$.reset();
-    config[CACHED] = true;
     config._$.defaults(defaults);
     presetConfig.load(config, { ...options });
-    // config._$.compose(options);
-    configs[cacheKey] = config;
+    if (cache) {
+      console.log("setting config cached");
+      config[CACHED] = true;
+      configs[cacheKey] = config;
+    }
   }
 
   return config;
