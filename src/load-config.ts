@@ -7,10 +7,10 @@ const configs = {};
 /**
  * handler for a config file of a specific extension
  *
- * @param fullFilePath full path to the config file
+ * @param _fullFilePath full path to the config file
  * @returns the config object loaded from the file
  */
-export type ExtHandler = (fullFilePath: string) => unknown;
+export type ExtHandler = (_fullFilePath: string) => unknown; // eslint-disable-line
 
 /**
  * Type of a config partial provider:
@@ -147,7 +147,6 @@ export const loadConfig = (options: LoadOptions, defaults?: unknown, refresh?: b
     config._$.defaults(defaults);
     presetConfig.load(config, { ...options });
     if (cache) {
-      console.log("setting config cached");
       config[CACHED] = true;
       configs[cacheKey] = config;
     }

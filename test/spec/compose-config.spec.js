@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const Path = require("path");
 const providerTypes = require("../../lib/provider-types");
 const intercept = require("intercept-stdout");
@@ -17,32 +19,32 @@ describe("confippet composeConfig", function () {
     const result = util.merge(
       {
         foo: {
-          bar: "env"
+          bar: "env",
         },
         node: {
-          config: "xyz"
-        }
+          config: "xyz",
+        },
       },
       composedResult()
     );
 
     process.env.CONFIPPET_0 = JSON.stringify({
-      foo: { bar: "env" }
+      foo: { bar: "env" },
     });
     process.env.NODE_CONFIG = JSON.stringify({
-      node: { config: "xyz" }
+      node: { config: "xyz" },
     });
     const data = Confippet.composeConfig({
       dir: Path.join(__dirname, "../config"),
       verbose: true,
       providers: {
         env: {
-          type: providerTypes.required
-        }
+          type: providerTypes.required,
+        },
       },
       context: {
-        instance: "0"
-      }
+        instance: "0",
+      },
     });
     unhookIntercept();
     const env = data.env;
@@ -59,19 +61,19 @@ describe("confippet composeConfig", function () {
       dir: Path.join(__dirname, "../config"),
       extSearch: ["js", "json", "yaml"],
       context: {
-        instance: "0"
-      }
+        instance: "0",
+      },
     });
     expect(data.js).to.equal("yaml");
   });
 
   it("should not fail required when requested not to", function () {
     process.env.CONFIPPET_0 = JSON.stringify({
-      foo: { bar: "env" }
+      foo: { bar: "env" },
     });
     const data = Confippet.composeConfig({
       dir: Path.join(__dirname, "../data"),
-      failMissing: false
+      failMissing: false,
     });
     expect(data.foo.bar).to.equal("env");
     delete process.env.CONFIPPET_0;
@@ -88,8 +90,8 @@ describe("confippet composeConfig", function () {
       dir: Path.join(__dirname, "../config"),
       warnMissing,
       context: {
-        instance: "0"
-      }
+        instance: "0",
+      },
     });
     if (warnMissing) {
       expect(warn).to.be.above(0);
@@ -122,9 +124,9 @@ describe("confippet composeConfig", function () {
         warnMissing: false,
         providers: {
           a: {
-            handler: () => {}
-          }
-        }
+            handler: () => {},
+          },
+        },
       });
     }).to.throw(Error);
   });
@@ -134,7 +136,7 @@ describe("confippet composeConfig", function () {
       Confippet.composeConfig({
         failMissing: false,
         warnMissing: false,
-        providerList: []
+        providerList: [],
       });
     }).to.throw(Error);
   });
@@ -145,8 +147,8 @@ describe("confippet composeConfig", function () {
         failMissing: false,
         warnMissing: false,
         context: {
-          defaultFilter: ""
-        }
+          defaultFilter: "",
+        },
       });
     }).to.throw(Error);
   });
@@ -155,8 +157,8 @@ describe("confippet composeConfig", function () {
     Confippet.composeConfig({
       warnMissing: false,
       context: {
-        defaultType: providerTypes.optional
-      }
+        defaultType: providerTypes.optional,
+      },
     });
   });
 
@@ -173,7 +175,7 @@ describe("confippet composeConfig", function () {
           handler: () => {
             cCalled = true;
           },
-          order: "-2"
+          order: "-2",
         },
         b: {
           type: providerTypes.required,
@@ -182,28 +184,28 @@ describe("confippet composeConfig", function () {
             bCalled = true;
           },
           filter: "enabled",
-          order: 0
+          order: 0,
         },
         a: {
           type: providerTypes.required,
           handler: () => {
             expect(bCalled).to.equal(false);
-          }
+          },
         },
         d: {
           type: providerTypes.required,
           handler: () => {
             throw new Error("not expect provider d to be called");
-          }
+          },
         },
         e: {
           type: providerTypes.required,
           handler: () => {
             throw new Error("not expect provider e to be called");
           },
-          filter: false
-        }
-      }
+          filter: false,
+        },
+      },
     });
   });
 });

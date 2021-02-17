@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { loadConfig } from "../../lib/load-config";
 import * as Path from "path";
 import { expect } from "chai";

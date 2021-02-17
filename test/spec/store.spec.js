@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 "use strict";
 
 const Confippet = require("../..");
@@ -8,9 +10,9 @@ describe("store", function () {
     store._$.use({
       foo: {
         x: {
-          val: ["bar", "blah", "hello"]
-        }
-      }
+          val: ["bar", "blah", "hello"],
+        },
+      },
     });
 
     store._$.defaults({
@@ -18,18 +20,18 @@ describe("store", function () {
         val: [
           {
             foo: {
-              x: 10
-            }
+              x: 10,
+            },
           },
           {
-            hello: "world"
-          }
-        ]
+            hello: "world",
+          },
+        ],
       },
       foo: {
         x: "oops",
-        bar: "hello"
-      }
+        bar: "hello",
+      },
     });
 
     expect(store.$("foo.x.val.0")).to.equal("bar");
@@ -47,20 +49,20 @@ describe("store", function () {
     store._$.use({
       foo: {
         x: {
-          val: "500"
-        }
+          val: "500",
+        },
       },
       p: {
         y: [
           "{{config.foo.x.val}}",
           {
-            k: "{{config.foo.bar}}"
+            k: "{{config.foo.bar}}",
           },
           {
-            n: "{{env.TEST_N}}"
-          }
-        ]
-      }
+            n: "{{env.TEST_N}}",
+          },
+        ],
+      },
     });
 
     expect(store.$("foo.x.val")).to.equal("500");
@@ -75,7 +77,7 @@ describe("store", function () {
     expect(store).to.deep.equal({});
 
     store._$.compose({
-      dir: "test/config"
+      dir: "test/config",
     });
 
     const result = require("../composed-result")();

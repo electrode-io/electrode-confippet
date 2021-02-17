@@ -1,0 +1,360 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>electrode-confippet</title>
+	<meta name="description" content="Documentation for electrode-confippet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">electrode-confippet</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>electrode-confippet</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#electrode-confippet--" id="electrode-confippet--" style="color: inherit; text-decoration: none;">
+					<h1>Electrode Confippet <a href="https://npmjs.org/package/electrode-confippet"><img src="https://badge.fury.io/js/electrode-confippet.svg" alt="NPM version"></a> <a href="https://travis-ci.org/electrode-io/electrode-confippet"><img src="https://travis-ci.org/electrode-io/electrode-confippet.svg?branch=master" alt="Build Status"></a></h1>
+				</a>
+				<p>Confippet is a versatile, flexible utility for managing configurations of
+					Node.js applications. It&#39;s simple to get started, and can be customized and
+				extended to meet the needs of your app.</p>
+				<hr>
+				<a href="#contents" id="contents" style="color: inherit; text-decoration: none;">
+					<h2>Contents</h2>
+				</a>
+				<ul>
+					<li>[Electrode Confippet <img src="#electrode-confippet-npm-versionnpm-url-build-statustravis-imagetravis-url" alt="NPM version"><ul>
+							<li><a href="#contents">Contents</a></li>
+							<li><a href="#features">Features</a></li>
+							<li><a href="#getting-started">Getting Started</a><ul>
+									<li><a href="#installation">Installation</a></li>
+									<li><a href="#basic-use">Basic Use</a></li>
+								</ul>
+							</li>
+							<li><a href="#config-composition">Config Composition</a></li>
+							<li><a href="#environment-variables">Environment Variables</a></li>
+							<li><a href="#using-templates">Using Templates</a></li>
+							<li><a href="#usage-in-node-modules">Usage in Node Modules</a></li>
+							<li><a href="#customization">Customization</a></li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<ul>
+					<li><strong>Simple</strong> - Confippet&#39;s <code>presetConfig</code> automatically composes a single config
+						object from multiple files. For most applications, no further customization is
+					necessary.</li>
+					<li><strong>Flexible</strong> - Supports JSON, YAML, and JavaScript config files.</li>
+					<li><strong>Powerful</strong> - Handles complex multi-instance enterprise deployments.</li>
+				</ul>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting Started</h2>
+				</a>
+				<p>In this example, we&#39;ll create two config files: a default file that always
+					loads, and a production file that loads only when the <code>NODE_ENV</code> environment
+					variable is set to <code>production</code>. We&#39;ll then import those files into a standard
+				Node.js app.</p>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h3>Installation</h3>
+				</a>
+				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> </span><span style="color: #001080">electrode</span><span style="color: #000000">-</span><span style="color: #001080">confippet</span><span style="color: #000000"> --</span><span style="color: #001080">save</span>
+</code></pre>
+				<a href="#basic-use" id="basic-use" style="color: inherit; text-decoration: none;">
+					<h3>Basic Use</h3>
+				</a>
+				<p>Make a <code>config/</code> directory inside the main app directory, and put the following
+				into a file named <code>default.json</code> in that directory:</p>
+				<pre><code class="language-json"><span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #0451A5">&quot;settings&quot;</span><span style="color: #000000">: {</span>
+<span style="color: #000000">    </span><span style="color: #0451A5">&quot;db&quot;</span><span style="color: #000000">: {</span>
+<span style="color: #000000">      </span><span style="color: #0451A5">&quot;host&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;localhost&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #0451A5">&quot;port&quot;</span><span style="color: #000000">: </span><span style="color: #098658">5432</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #0451A5">&quot;database&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;clients&quot;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Next, add another file called <code>production.json</code> to the <code>config/</code> directory, with
+				this content:</p>
+				<pre><code class="language-json"><span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #0451A5">&quot;settings&quot;</span><span style="color: #000000">: {</span>
+<span style="color: #000000">    </span><span style="color: #0451A5">&quot;db&quot;</span><span style="color: #000000">: {</span>
+<span style="color: #000000">      </span><span style="color: #0451A5">&quot;host&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;prod-db-server&quot;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Finally, in our Node.js app, we can import Confippet and use the configuration
+				we&#39;ve created:</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;electrode-confippet&quot;</span><span style="color: #000000">).</span><span style="color: #001080">config</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">db</span><span style="color: #000000"> = </span><span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #795E26">$</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;settings.db&quot;</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>In this example, <code>default.json</code> will be loaded in all environments, whereas
+					<code>production.json</code> will be loaded only when the <code>NODE_ENV</code> environment variable
+					is set to <code>production</code>. In that case, the value of <code>host</code> in the <code>db</code> object
+				will be overwritten by the value in <code>production.json</code>.</p>
+				<a href="#config-composition" id="config-composition" style="color: inherit; text-decoration: none;">
+					<h2>Config Composition</h2>
+				</a>
+				<p>Confippet&#39;s <code>presetConfig</code> composes together files in the <code>config/</code> directory,
+				in the following order:</p>
+				<blockquote>
+					<p>This is the same as <a href="https://github.com/lorenwest/node-config/wiki/Configuration-Files">node-config files</a>.</p>
+				</blockquote>
+				<ol>
+					<li><code>default.EXT</code></li>
+					<li><code>default-{instance}.EXT</code></li>
+					<li><code>{deployment}.EXT</code></li>
+					<li><code>{deployment}-{instance}.EXT</code></li>
+					<li><code>{short_hostname}.EXT</code></li>
+					<li><code>{short_hostname}-{instance}.EXT</code></li>
+					<li><code>{short_hostname}-{deployment}.EXT</code></li>
+					<li><code>{short_hostname}-{deployment}-{instance}.EXT</code></li>
+					<li><code>{full_hostname}.EXT</code></li>
+					<li><code>{full_hostname}-{instance}.EXT</code></li>
+					<li><code>{full_hostname}-{deployment}.EXT</code></li>
+					<li><code>{full_hostname}-{deployment}-{instance}.EXT</code></li>
+					<li><code>local.EXT</code></li>
+					<li><code>local-{instance}.EXT</code></li>
+					<li><code>local-{deployment}.EXT</code></li>
+					<li><code>local-{deployment}-{instance}.EXT</code></li>
+				</ol>
+				<p>Where:</p>
+				<ul>
+					<li><code>EXT</code> can be any of <code>[&quot;json&quot;, &quot;yaml&quot;, &quot;js&quot;]</code>. Confippet will load all of them,
+						in that order. Each time it finds a config file, the values in that file will
+						be loaded and merged into the config store. So <code>js</code> overrides <code>yaml</code>, which
+						overrides <code>json</code>. You can add handlers for other file types and change their
+					loading order—see <a href="./compose.md">composeConfig</a> for further details.</li>
+					<li><code>{instance}</code> is your app&#39;s instance string in multi-instance deployments
+					(specified by the <code>NODE_APP_INSTANCE</code> environment variable).</li>
+					<li><code>{short_hostname}</code> is your server name up to the first dot.</li>
+					<li><code>{full_hostname}</code> is your whole server name.</li>
+					<li><code>{deployment}</code> is your deployment environment (specified by the <code>NODE_ENV</code>
+					environment variable).</li>
+				</ul>
+				<p>Overridden values are handled as follows:</p>
+				<ul>
+					<li>Objects are merged.</li>
+					<li>Primitive values (string, boolean, number) are replaced.</li>
+					<li><strong>Arrays are replaced</strong>, unless the key starts with <code>+</code> <em>and</em> both the source
+						and the target are arrays. In that case, the two arrays are joined together
+					using Lodash&#39;s <code>_.union</code> method.</li>
+				</ul>
+				<p>After Confippet loads all available configuration files, it will look for
+					override JSON strings from the <code>NODE_CONFIG</code> and <code>CONFIPPET*</code> environment
+				variables. See the next section for details.</p>
+				<a href="#environment-variables" id="environment-variables" style="color: inherit; text-decoration: none;">
+					<h2>Environment Variables</h2>
+				</a>
+				<p>Confippet reads the following environment variables when composing a config
+				store:</p>
+				<ul>
+					<li><code>AUTO_LOAD_CONFIG_OFF</code> - If this is set, then Confippet will <strong>not</strong>
+						automatically load any configuration into the preset <code>config</code> store.
+						<code>Confippet.config</code> will be an empty store. This enables you to customize the
+					config structure before loading.</li>
+					<li><code>NODE_CONFIG_DIR</code> - Set the directory to search for config files. By default,
+					Confippet looks in the <code>config</code> directory for config files.</li>
+					<li><code>NODE_ENV</code> - By default, Confippet loads <code>development</code> config files after
+						loading <code>default</code>. Set this environment variable to change to a different
+					deployment, such as <code>production</code>.</li>
+					<li><code>NODE_APP_INSTANCE</code> - If your app is deployed to multiple instances, you can
+					set this to load instance-specific configurations.</li>
+					<li><code>AUTO_LOAD_CONFIG_PROCESS_OFF</code> - By default, after composing the config from
+						all sources, Confippet will use <a href="./templates.md">processConfig</a> to process
+						<a href="#using-templates">templates</a>. You can set this environment variable to
+					disable template processing.</li>
+					<li><code>NODE_CONFIG</code> - You can set this to a valid JSON string and Confippet will
+					parse it to override the configuration.</li>
+					<li><code>CONFIPPET*</code> - Any environment variables that starts with <code>CONFIPPET</code> will be
+					parsed as JSON strings to override the configuration.</li>
+				</ul>
+				<a href="#using-templates" id="using-templates" style="color: inherit; text-decoration: none;">
+					<h2>Using Templates</h2>
+				</a>
+				<p>Values in your config files can be templates, which will be resolved with
+					a preset context. See <a href="./templates.md">processConfig</a> for more information about how to use
+				config value templates.</p>
+				<a href="#usage-in-node-modules" id="usage-in-node-modules" style="color: inherit; text-decoration: none;">
+					<h2>Usage in Node Modules</h2>
+				</a>
+				<p>If you have a Node.js module that has its own configurations based on
+					environment variables, like <code>NODE_ENV</code>, you can use Confippet to load config
+				files for your module.</p>
+				<p>The example below will use the <a href="./lib/default-compose-opts.js">default compose options</a> to compose
+					configurations from the directory <code>config</code> under the script&#39;s directory
+				(<code>__dirname</code>).</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Confippet</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;electrode-confippet&quot;</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">options</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">dirs:</span><span style="color: #000000"> [</span><span style="color: #001080">Path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;config&quot;</span><span style="color: #000000">)],</span>
+<span style="color: #000000">  </span><span style="color: #001080">warnMissing:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">context:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">deployment:</span><span style="color: #000000"> </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">NODE_ENV</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">defaults</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">foo:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;bar&quot;</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config</span><span style="color: #000000"> = </span><span style="color: #001080">Confippet</span><span style="color: #000000">.</span><span style="color: #795E26">loadConfig</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">, </span><span style="color: #001080">defaults</span><span style="color: #000000"> </span><span style="color: #008000">/* refresh: true */</span><span style="color: #000000">);</span>
+</code></pre>
+				<a href="#customization" id="customization" style="color: inherit; text-decoration: none;">
+					<h2>Customization</h2>
+				</a>
+				<p>The <a href="./compose.md">composeConfig</a> feature supports a fully customizable and extendable config
+					structure. Even Confippet&#39;s own preset config structure can be extended, since
+				it&#39;s composed using the same feature.</p>
+				<p>If you want to use the preset config, but add an extension handler or insert
+					a source, you can turn off auto loading, and load it yourself with your own
+				options.</p>
+				<blockquote>
+					<p><strong>NOTE:</strong> This has to happen before any other file accesses
+					<code>Confippet.config</code>. You should do this in your startup <code>index.js</code> file.</p>
+				</blockquote>
+				<p>For example:</p>
+				<pre><code class="language-javascript"><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">AUTO_LOAD_CONFIG_OFF</span><span style="color: #000000"> = </span><span style="color: #0000FF">true</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">JSON5</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;json5&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fs</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;fs&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Confippet</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;electrode-confippet&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config</span><span style="color: #000000"> = </span><span style="color: #001080">Confippet</span><span style="color: #000000">.</span><span style="color: #001080">config</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">extHandlers</span><span style="color: #000000"> = </span><span style="color: #001080">Confippet</span><span style="color: #000000">.</span><span style="color: #001080">extHandlers</span><span style="color: #000000">;</span>
+<span style="color: #001080">extHandlers</span><span style="color: #000000">.</span><span style="color: #795E26">json5</span><span style="color: #000000"> = (</span><span style="color: #001080">fullF</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #0070C1">JSON5</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #001080">fs</span><span style="color: #000000">.</span><span style="color: #795E26">readFileSync</span><span style="color: #000000">(</span><span style="color: #001080">fullF</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;utf8&quot;</span><span style="color: #000000">));</span>
+
+<span style="color: #001080">Confippet</span><span style="color: #000000">.</span><span style="color: #001080">presetConfig</span><span style="color: #000000">.</span><span style="color: #795E26">load</span><span style="color: #000000">(</span><span style="color: #001080">config</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">extSearch:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;json&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;json5&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;yaml&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;js&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">  </span><span style="color: #001080">extHandlers</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">providers:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">customConfig:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;{{env.CUSTOM_CONFIG_SOURCE}}&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">order:</span><span style="color: #000000"> </span><span style="color: #098658">300</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">type:</span><span style="color: #000000"> </span><span style="color: #001080">Confippet</span><span style="color: #000000">.</span><span style="color: #001080">providerTypes</span><span style="color: #000000">.</span><span style="color: #001080">required</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>The above compose option adds a new provider that looks for a file named by the
+					environment variable <code>CUSTOM_CONFIG_SOURCE</code> and will be loaded after all default
+				sources are loaded (controlled by <code>order</code>).</p>
+				<p>It also adds a new extension handler, <code>json5</code>, to be loaded after <code>json</code>.</p>
+				<p>To further understand the <code>_$</code> and the <code>compose</code> options, please see the
+				documentation for <a href="./store.md">store</a>, <a href="./compose.md">composeConfig</a>, and <a href="./templates.md">processConfig</a>.</p>
+				<p>Built with :heart: by <a href="https://github.com/orgs/electrode-io/people">Team Electrode</a> @WalmartLabs.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/compose_config.html">compose-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/default_compose_opts.html">default-<wbr>compose-<wbr>opts</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/ext_handlers.html">ext-<wbr>handlers</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/load_config.html">load-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/preset_config.html">preset-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/process_config.html">process-<wbr>config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/provider_types.html">provider-<wbr>types</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/store.html">store</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/util.html">util</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 "use strict";
 
 const _ = require("lodash");
@@ -24,9 +26,9 @@ describe("processConfig", function () {
       etewe: 50,
       "f-qeoir": {
         "g~1234{{}}": {
-          h: 100
-        }
-      }
+          h: 100,
+        },
+      },
     };
 
     const save = _.cloneDeep(config);
@@ -50,8 +52,8 @@ describe("processConfig", function () {
       badConf: "{{config.bad1.bad2}}",
       badN1: {
         badN2: {
-          badN3: "{{config.badx.bady}}"
-        }
+          badN3: "{{config.badx.bady}}",
+        },
       },
       mm: {
         nn: {
@@ -59,25 +61,25 @@ describe("processConfig", function () {
             {
               m: {
                 n: {
-                  mx: "{{config.m.n.x}}"
-                }
-              }
+                  mx: "{{config.m.n.x}}",
+                },
+              },
             },
             {
               m: {
                 n: {
-                  my: "{{config.m.n.y}}"
-                }
-              }
-            }
-          ]
-        }
+                  my: "{{config.m.n.y}}",
+                },
+              },
+            },
+          ],
+        },
       },
       m: {
         n: {
           x: "50",
-          y: "60"
-        }
+          y: "60",
+        },
       },
       key: "{{readFile: test/data/foo.txt : ascii}}",
       key2: "{{readFile:test/data/foo.txt}}",
@@ -92,8 +94,8 @@ describe("processConfig", function () {
       badEnv: "{{getEnv:bad_env}}",
       badEnv2: "{{getEnv}}",
       ui: {
-        env: "{{env.NODE_ENV}}"
-      }
+        env: "{{env.NODE_ENV}}",
+      },
     };
 
     process.env.NODE_APP_INSTANCE = 5;
@@ -134,21 +136,21 @@ describe("processConfig", function () {
 
   it("should throw error if readFile missing filename", () => {
     const config = {
-      key: "{{readFile}}"
+      key: "{{readFile}}",
     };
     expect(() => Confippet.processConfig(config)).to.throw();
   });
 
   it("should throw error if readFile missing file", () => {
     const config = {
-      key: "{{readFile:missing_file.txt}}"
+      key: "{{readFile:missing_file.txt}}",
     };
     expect(() => Confippet.processConfig(config)).to.throw();
   });
 
   it("should throw error for circular templates", () => {
     const config = {
-      x: "{{config.x}}"
+      x: "{{config.x}}",
     };
 
     expect(() => Confippet.processConfig(config)).to.throw();
