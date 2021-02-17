@@ -9,7 +9,8 @@
     "check": "xrun --serial build xarc/check",
     "prepublishOnly": "xrun [[build, docs], xarc/check]",
     "coverage": "xrun --serial build xarc/test-cov",
-    "docs": "xrun xarc/docs"
+    "docs": "xrun xarc/docs",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "author": "Joel Chen <xchen@walmartlabs.com>",
@@ -98,8 +99,8 @@
     }
   },
   "files": [
-    "dist",
-    "lib"
+    "lib",
+    "src"
   ],
   "mocha": {
     "require": [
