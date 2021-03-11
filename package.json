@@ -109,7 +109,8 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "config.js"
   ],
   "mocha": {
     "require": [
